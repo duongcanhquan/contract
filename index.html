@@ -2,143 +2,143 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Test Tìm Kiếm Dữ Liệu N8N</title>
+    <title>Tra Cứu Nhân Sự (Chỉ Tìm Theo Tên)</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 30px; background-color: #f9f9f9; }
-        h2 { color: #333; }
-        .box { background: white; border: 1px solid #ddd; padding: 0; margin-top: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); max-height: 300px; overflow-y: auto; }
-        input { padding: 12px; width: 100%; max-width: 400px; font-size: 16px; border: 2px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f6f8; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        input { padding: 12px; width: 100%; box-sizing: border-box; font-size: 16px; border: 2px solid #ddd; border-radius: 5px; margin-top: 10px; }
         input:focus { border-color: #007bff; outline: none; }
-        #status { font-weight: bold; margin-bottom: 15px; }
-        .item { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; }
-        .item:hover { background-color: #e3f2fd; color: #0056b3; }
+        #status { margin-bottom: 10px; font-weight: bold; font-size: 14px; }
+        .item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .item:hover { background-color: #eef; color: blue; }
+        #debug-area { margin-top: 10px; padding: 10px; background: #fff3cd; color: #856404; font-size: 13px; display: none; border-radius: 4px; border: 1px solid #ffeeba; }
         
         /* Khu vực hiển thị chi tiết */
-        #detail-area { 
-            background: #fff; 
-            padding: 20px; 
-            display: none; 
-            margin-top: 20px; 
-            border-left: 5px solid #28a745; 
-            border-radius: 4px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .detail-row { margin-bottom: 10px; font-size: 16px; }
-        .detail-label { font-weight: bold; color: #555; width: 120px; display: inline-block; }
+        #detail-area { background: #e8f5e9; padding: 15px; display: none; margin-top: 20px; border: 1px solid #c3e6cb; border-radius: 5px; }
+        .d-row { margin-bottom: 8px; }
+        .d-label { font-weight: bold; width: 140px; display: inline-block; }
     </style>
 </head>
 <body>
 
-    <h2>🛠️ TRA CỨU HỢP ĐỒNG & NHÂN SỰ</h2>
-    
+<div class="container">
+    <h2>🔍 TRA CỨU NHÂN SỰ</h2>
     <div id="status" style="color:orange">⏳ Đang kết nối tới N8N...</div>
+    
+    <div id="debug-area"></div>
 
-    <input type="text" id="searchInp" placeholder="🔍 Nhập Tên, Email hoặc SĐT để tìm..." disabled>
-
-    <div id="resultList" class="box" style="display:none"></div>
+    <input type="text" id="searchInp" placeholder="Nhập Họ Tên để tìm..." disabled>
+    <div id="resultList"></div>
 
     <div id="detail-area">
-        <h3 style="margin-top:0">✅ Kết quả tra cứu:</h3>
-        <div class="detail-row"><span class="detail-label">Họ và Tên:</span> <span id="out_name"></span></div>
-        <div class="detail-row"><span class="detail-label">Email:</span> <span id="out_email"></span></div>
-        <div class="detail-row"><span class="detail-label">Điện thoại:</span> <span id="out_phone"></span></div>
-        <div class="detail-row"><span class="detail-label">CMND/CCCD:</span> <span id="out_cmnd"></span></div>
-        <div class="detail-row"><span class="detail-label">Ngày sinh:</span> <span id="out_dob"></span></div>
-        <div class="detail-row"><span class="detail-label">Hợp đồng:</span> <span id="out_contract"></span></div>
+        <h3>✅ Thông tin chi tiết:</h3>
+        <div class="d-row"><span class="d-label">Họ và Tên:</span> <span id="out_name"></span></div>
+        <div class="d-row"><span class="d-label">Email:</span> <span id="out_email"></span></div>
+        <div class="d-row"><span class="d-label">SĐT:</span> <span id="out_phone"></span></div>
+        <div class="d-row"><span class="d-label">CMND/CCCD:</span> <span id="out_cmnd"></span></div>
+        <div class="d-row"><span class="d-label">Hợp đồng:</span> <span id="out_contract"></span></div>
     </div>
+</div>
 
-    <script>
-        // 🔴 LINK API CỦA BẠN (GIỮ NGUYÊN)
-        const API_URL = "https://apchn-host.lapage.vn/webhook/api-get-candidates"; 
+<script>
+    // 🔴 API CỦA BẠN
+    const API_URL = "https://apchn-host.lapage.vn/webhook/api-get-candidates"; 
 
-        let database = []; 
-        const statusDiv = document.getElementById('status');
-        const searchInp = document.getElementById('searchInp');
-        const resultList = document.getElementById('resultList');
-        const detailArea = document.getElementById('detail-area');
+    let database = []; 
+    let NAME_KEY = ""; // Biến lưu tên chính xác của cột B (Họ Tên)
 
-        // 1. TẢI DỮ LIỆU TỪ N8N
-        fetch(API_URL)
-            .then(response => response.json())
-            .then(data => {
-                // Xử lý dữ liệu đầu vào (phòng trường hợp N8N trả về các dạng khác nhau)
-                let rawData = [];
-                if (Array.isArray(data)) rawData = data;
-                else if (data.data && Array.isArray(data.data)) rawData = data.data;
-                else rawData = [data];
+    const statusDiv = document.getElementById('status');
+    const searchInp = document.getElementById('searchInp');
+    const resultList = document.getElementById('resultList');
+    const detailArea = document.getElementById('detail-area');
+    const debugArea = document.getElementById('debug-area');
 
-                // Lấy dữ liệu sạch (bỏ wrapper .json nếu có)
-                database = rawData.map(item => item.json ? item.json : item);
+    // 1. TẢI DỮ LIỆU
+    fetch(API_URL)
+        .then(response => response.json())
+        .then(data => {
+            // Xử lý làm sạch dữ liệu
+            let rawData = [];
+            if (Array.isArray(data)) rawData = data;
+            else if (data.data && Array.isArray(data.data)) rawData = data.data;
+            else rawData = [data];
 
-                if (database.length > 0) {
-                    statusDiv.innerText = `✅ Đã tải xong ${database.length} hồ sơ! Sẵn sàng tra cứu.`;
-                    statusDiv.style.color = "green";
-                    searchInp.disabled = false;
-                    searchInp.focus();
-                } else {
-                    statusDiv.innerText = "⚠️ Kết nối thành công nhưng không có dữ liệu (0 dòng).";
+            database = rawData.map(item => item.json ? item.json : item);
+
+            if (database.length > 0) {
+                // --- THUẬT TOÁN TÌM CỘT TÊN (QUAN TRỌNG) ---
+                // Lấy dòng đầu tiên để soi tên cột
+                const firstRow = database[0];
+                const keys = Object.keys(firstRow);
+                
+                // Tìm key nào có chữ "Name" hoặc "Họ và Tên"
+                // N8N thường trả về đúng thứ tự, nên cột B thường nằm ở vị trí index 1 (sau Timestamp)
+                // Tuy nhiên ta tìm theo tên cho chắc.
+                NAME_KEY = keys.find(k => k.toLowerCase().includes("name") || k.toLowerCase().includes("họ và tên"));
+                
+                // Nếu không tìm thấy bằng chữ, ta ép lấy cột thứ 2 (Index 1) vì cột 1 là Timestamp
+                if (!NAME_KEY && keys.length > 1) {
+                    NAME_KEY = keys[1]; 
                 }
-            })
-            .catch(err => {
-                statusDiv.innerText = "❌ Lỗi kết nối: " + err.message;
-                statusDiv.style.color = "red";
-            });
 
-        // 2. XỬ LÝ TÌM KIẾM
-        searchInp.addEventListener('input', function() {
-            const keyword = this.value.toLowerCase().trim();
-            resultList.innerHTML = ''; 
-            detailArea.style.display = 'none';
+                statusDiv.innerText = `✅ Đã tải ${database.length} hồ sơ.`;
+                statusDiv.style.color = "green";
+                searchInp.disabled = false;
+                searchInp.focus();
 
-            if (keyword.length < 1) {
-                resultList.style.display = 'none';
-                return;
-            }
-
-            resultList.style.display = 'block';
-
-            // Lọc dữ liệu: Tìm trong tất cả các cột
-            const ketQua = database.filter(dong => {
-                const textData = Object.values(dong).join(' ').toLowerCase();
-                return textData.includes(keyword);
-            });
-
-            if (ketQua.length === 0) {
-                resultList.innerHTML = '<div style="padding:15px; color:gray">Không tìm thấy ai...</div>';
+                // HIỂN THỊ CỘT MÀ MÁY TÍNH ĐANG DÙNG ĐỂ TÌM
+                debugArea.style.display = 'block';
+                debugArea.innerHTML = `⚠️ Đang tìm kiếm trong cột: <strong>[${NAME_KEY}]</strong>`;
+                
             } else {
-                ketQua.forEach(nguoi => {
-                    const div = document.createElement('div');
-                    div.className = 'item';
-                    
-                    // 👉 TRÍCH XUẤT DỮ LIỆU ĐỂ HIỂN THỊ DANH SÁCH (Sử dụng đúng tên cột bạn cung cấp)
-                    const ten = nguoi['Họ và Tên/ Name'] || 'Không tên';
-                    const email = nguoi['Email cá nhân/ Email'] || '';
-                    
-                    div.innerHTML = `<strong>${ten}</strong> <span style='color:#777; font-size:0.9em'>(${email})</span>`;
-                    
-                    // Khi bấm vào tên người nào -> Hiện chi tiết
-                    div.onclick = () => hienThiChiTiet(nguoi);
-                    
-                    resultList.appendChild(div);
-                });
+                statusDiv.innerText = "⚠️ Dữ liệu rỗng.";
             }
+        })
+        .catch(err => {
+            statusDiv.innerText = "❌ Lỗi: " + err.message;
         });
 
-        // 3. HÀM HIỂN THỊ CHI TIẾT (MAP ĐÚNG KEY CỦA GOOGLE SHEET)
-        function hienThiChiTiet(nguoi) {
-            detailArea.style.display = 'block';
-            resultList.style.display = 'none'; // Ẩn danh sách gợi ý đi cho gọn
-            searchInp.value = ''; // Xóa ô tìm kiếm
+    // 2. TÌM KIẾM (CHỈ TÌM TRONG CỘT TÊN)
+    searchInp.addEventListener('input', function() {
+        const keyword = this.value.toLowerCase().trim();
+        resultList.innerHTML = ''; 
+        detailArea.style.display = 'none';
 
-            // 👉 ĐÂY LÀ PHẦN QUAN TRỌNG NHẤT: GÁN ĐÚNG TÊN CỘT
-            document.getElementById('out_name').innerText = nguoi['Họ và Tên/ Name'] || '';
-            document.getElementById('out_email').innerText = nguoi['Email cá nhân/ Email'] || '';
-            document.getElementById('out_phone').innerText = nguoi['Số điện thoại liên hệ/ Phone number'] || '';
-            document.getElementById('out_cmnd').innerText = nguoi['Số CMND/ ID'] || '';
-            document.getElementById('out_dob').innerText = nguoi['Ngày sinh/ Date of birth'] || '';
-            document.getElementById('out_contract').innerText = nguoi['Loại Hợp Đồng/ Type of Contract'] || '';
+        if (keyword.length < 1) return;
+
+        // Lọc dữ liệu: CHỈ SO SÁNH CỘT NAME_KEY
+        const ketQua = database.filter(dong => {
+            const tenNguoi = dong[NAME_KEY] || ''; // Lấy giá trị cột Tên
+            return tenNguoi.toLowerCase().includes(keyword);
+        });
+
+        if (ketQua.length === 0) {
+            resultList.innerHTML = '<div style="padding:10px; color:gray">Không tìm thấy ai tên là "' + keyword + '"</div>';
+        } else {
+            ketQua.forEach(nguoi => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerText = `👤 ${nguoi[NAME_KEY]}`; // Chỉ hiện Tên
+                div.onclick = () => hienThiChiTiet(nguoi);
+                resultList.appendChild(div);
+            });
         }
-    </script>
+    });
+
+    // 3. HIỂN THỊ CHI TIẾT
+    function hienThiChiTiet(nguoi) {
+        detailArea.style.display = 'block';
+        resultList.innerHTML = ''; // Xóa danh sách gợi ý
+        
+        document.getElementById('out_name').innerText = nguoi[NAME_KEY];
+        
+        // Các cột khác vẫn lấy theo tên bạn cung cấp
+        document.getElementById('out_email').innerText = nguoi['Email cá nhân/ Email'] || '(Trống)';
+        document.getElementById('out_phone').innerText = nguoi['Số điện thoại liên hệ/ Phone number'] || '(Trống)';
+        document.getElementById('out_cmnd').innerText = nguoi['Số CMND/ ID'] || '(Trống)';
+        document.getElementById('out_contract').innerText = nguoi['Loại Hợp Đồng/ Type of Contract'] || '(Trống)';
+    }
+</script>
 
 </body>
 </html>
