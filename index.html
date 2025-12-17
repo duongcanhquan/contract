@@ -1,90 +1,144 @@
-<script>
-    // 🔴 LINK API CỦA BẠN
-    const API_URL = "https://apchn-host.lapage.vn/webhook/api-get-candidates"; 
-
-    let database = []; 
-    const statusDiv = document.getElementById('status');
-    const searchInp = document.getElementById('searchInp');
-    const resultList = document.getElementById('resultList');
-    const detailArea = document.getElementById('detail-area');
-
-    // 1. TẢI DỮ LIỆU
-    fetch(API_URL)
-        .then(response => response.json())
-        .then(data => {
-            // Xử lý dữ liệu dù N8N trả về dạng nào
-            let rawData = [];
-            if (Array.isArray(data)) rawData = data;
-            else if (data.data && Array.isArray(data.data)) rawData = data.data;
-            else rawData = [data];
-
-            // Làm sạch dữ liệu (Bỏ lớp vỏ .json nếu có)
-            database = rawData.map(item => item.json ? item.json : item);
-
-            if (database.length > 0) {
-                statusDiv.innerText = `✅ Đã tải xong ${database.length} dòng dữ liệu! Hãy gõ tìm kiếm.`;
-                statusDiv.style.color = "green";
-                searchInp.disabled = false;
-                
-                // 🛠️ IN TÊN CÁC CỘT RA MÀN HÌNH ĐỂ BẠN NHÌN THẤY
-                const firstItem = database[0];
-                const columnNames = Object.keys(firstItem).join(" | ");
-                
-                const debugBox = document.createElement('div');
-                debugBox.style.cssText = "background:#fff3cd; color:#856404; padding:10px; margin-top:10px; font-size:13px; border:1px solid #ffeeba;";
-                debugBox.innerHTML = `<strong>⚠️ MÁY TÍNH ĐANG THẤY CÁC CỘT TÊN LÀ:</strong><br>${columnNames}`;
-                statusDiv.appendChild(debugBox);
-                
-            } else {
-                statusDiv.innerText = "⚠️ Kết nối thành công nhưng file rỗng (0 dòng).";
-            }
-        })
-        .catch(err => {
-            statusDiv.innerText = "❌ Lỗi: " + err.message;
-            statusDiv.style.color = "red";
-        });
-
-    // 2. TÌM KIẾM (BẤT CHẤP TÊN CỘT)
-    searchInp.addEventListener('input', function() {
-        const keyword = this.value.toLowerCase().trim();
-        resultList.innerHTML = ''; 
-        detailArea.style.display = 'none';
-
-        if (keyword.length < 1) return;
-
-        // Lọc dữ liệu: Biến cả dòng thành chuỗi text để tìm
-        const ketQua = database.filter(dong => {
-            // Lấy tất cả giá trị, nối lại thành 1 câu dài rồi tìm
-            const textData = Object.values(dong).join(' ').toLowerCase();
-            return textData.includes(keyword);
-        });
-
-        if (ketQua.length === 0) {
-            resultList.innerHTML = '<div style="color:gray">Không tìm thấy ai...</div>';
-        } else {
-            ketQua.forEach(nguoi => {
-                const div = document.createElement('div');
-                div.className = 'item';
-                
-                // Hiển thị tóm tắt: Lấy 2 giá trị đầu tiên tìm thấy để hiển thị
-                const vals = Object.values(nguoi);
-                div.innerText = `👤 ${vals[0]} - 📧 ${vals[1] || '...'}`;
-                
-                div.onclick = () => hienThiChiTiet(nguoi);
-                resultList.appendChild(div);
-            });
-        }
-    });
-
-    // 3. HIỂN THỊ CHI TIẾT
-    function hienThiChiTiet(nguoi) {
-        detailArea.style.display = 'block';
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Tìm Kiếm Dữ Liệu N8N</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 30px; background-color: #f9f9f9; }
+        h2 { color: #333; }
+        .box { background: white; border: 1px solid #ddd; padding: 0; margin-top: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); max-height: 300px; overflow-y: auto; }
+        input { padding: 12px; width: 100%; max-width: 400px; font-size: 16px; border: 2px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        input:focus { border-color: #007bff; outline: none; }
+        #status { font-weight: bold; margin-bottom: 15px; }
+        .item { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; }
+        .item:hover { background-color: #e3f2fd; color: #0056b3; }
         
-        // Tự động in tất cả thông tin ra (vì chưa biết tên cột chính xác)
-        let htmlContent = '<h3>✅ Thông tin chi tiết:</h3>';
-        for (const [key, value] of Object.entries(nguoi)) {
-            htmlContent += `<p><strong>${key}:</strong> ${value}</p>`;
+        /* Khu vực hiển thị chi tiết */
+        #detail-area { 
+            background: #fff; 
+            padding: 20px; 
+            display: none; 
+            margin-top: 20px; 
+            border-left: 5px solid #28a745; 
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        detailArea.innerHTML = htmlContent;
-    }
-</script>
+        .detail-row { margin-bottom: 10px; font-size: 16px; }
+        .detail-label { font-weight: bold; color: #555; width: 120px; display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <h2>🛠️ TRA CỨU HỢP ĐỒNG & NHÂN SỰ</h2>
+    
+    <div id="status" style="color:orange">⏳ Đang kết nối tới N8N...</div>
+
+    <input type="text" id="searchInp" placeholder="🔍 Nhập Tên, Email hoặc SĐT để tìm..." disabled>
+
+    <div id="resultList" class="box" style="display:none"></div>
+
+    <div id="detail-area">
+        <h3 style="margin-top:0">✅ Kết quả tra cứu:</h3>
+        <div class="detail-row"><span class="detail-label">Họ và Tên:</span> <span id="out_name"></span></div>
+        <div class="detail-row"><span class="detail-label">Email:</span> <span id="out_email"></span></div>
+        <div class="detail-row"><span class="detail-label">Điện thoại:</span> <span id="out_phone"></span></div>
+        <div class="detail-row"><span class="detail-label">CMND/CCCD:</span> <span id="out_cmnd"></span></div>
+        <div class="detail-row"><span class="detail-label">Ngày sinh:</span> <span id="out_dob"></span></div>
+        <div class="detail-row"><span class="detail-label">Hợp đồng:</span> <span id="out_contract"></span></div>
+    </div>
+
+    <script>
+        // 🔴 LINK API CỦA BẠN (GIỮ NGUYÊN)
+        const API_URL = "https://apchn-host.lapage.vn/webhook/api-get-candidates"; 
+
+        let database = []; 
+        const statusDiv = document.getElementById('status');
+        const searchInp = document.getElementById('searchInp');
+        const resultList = document.getElementById('resultList');
+        const detailArea = document.getElementById('detail-area');
+
+        // 1. TẢI DỮ LIỆU TỪ N8N
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(data => {
+                // Xử lý dữ liệu đầu vào (phòng trường hợp N8N trả về các dạng khác nhau)
+                let rawData = [];
+                if (Array.isArray(data)) rawData = data;
+                else if (data.data && Array.isArray(data.data)) rawData = data.data;
+                else rawData = [data];
+
+                // Lấy dữ liệu sạch (bỏ wrapper .json nếu có)
+                database = rawData.map(item => item.json ? item.json : item);
+
+                if (database.length > 0) {
+                    statusDiv.innerText = `✅ Đã tải xong ${database.length} hồ sơ! Sẵn sàng tra cứu.`;
+                    statusDiv.style.color = "green";
+                    searchInp.disabled = false;
+                    searchInp.focus();
+                } else {
+                    statusDiv.innerText = "⚠️ Kết nối thành công nhưng không có dữ liệu (0 dòng).";
+                }
+            })
+            .catch(err => {
+                statusDiv.innerText = "❌ Lỗi kết nối: " + err.message;
+                statusDiv.style.color = "red";
+            });
+
+        // 2. XỬ LÝ TÌM KIẾM
+        searchInp.addEventListener('input', function() {
+            const keyword = this.value.toLowerCase().trim();
+            resultList.innerHTML = ''; 
+            detailArea.style.display = 'none';
+
+            if (keyword.length < 1) {
+                resultList.style.display = 'none';
+                return;
+            }
+
+            resultList.style.display = 'block';
+
+            // Lọc dữ liệu: Tìm trong tất cả các cột
+            const ketQua = database.filter(dong => {
+                const textData = Object.values(dong).join(' ').toLowerCase();
+                return textData.includes(keyword);
+            });
+
+            if (ketQua.length === 0) {
+                resultList.innerHTML = '<div style="padding:15px; color:gray">Không tìm thấy ai...</div>';
+            } else {
+                ketQua.forEach(nguoi => {
+                    const div = document.createElement('div');
+                    div.className = 'item';
+                    
+                    // 👉 TRÍCH XUẤT DỮ LIỆU ĐỂ HIỂN THỊ DANH SÁCH (Sử dụng đúng tên cột bạn cung cấp)
+                    const ten = nguoi['Họ và Tên/ Name'] || 'Không tên';
+                    const email = nguoi['Email cá nhân/ Email'] || '';
+                    
+                    div.innerHTML = `<strong>${ten}</strong> <span style='color:#777; font-size:0.9em'>(${email})</span>`;
+                    
+                    // Khi bấm vào tên người nào -> Hiện chi tiết
+                    div.onclick = () => hienThiChiTiet(nguoi);
+                    
+                    resultList.appendChild(div);
+                });
+            }
+        });
+
+        // 3. HÀM HIỂN THỊ CHI TIẾT (MAP ĐÚNG KEY CỦA GOOGLE SHEET)
+        function hienThiChiTiet(nguoi) {
+            detailArea.style.display = 'block';
+            resultList.style.display = 'none'; // Ẩn danh sách gợi ý đi cho gọn
+            searchInp.value = ''; // Xóa ô tìm kiếm
+
+            // 👉 ĐÂY LÀ PHẦN QUAN TRỌNG NHẤT: GÁN ĐÚNG TÊN CỘT
+            document.getElementById('out_name').innerText = nguoi['Họ và Tên/ Name'] || '';
+            document.getElementById('out_email').innerText = nguoi['Email cá nhân/ Email'] || '';
+            document.getElementById('out_phone').innerText = nguoi['Số điện thoại liên hệ/ Phone number'] || '';
+            document.getElementById('out_cmnd').innerText = nguoi['Số CMND/ ID'] || '';
+            document.getElementById('out_dob').innerText = nguoi['Ngày sinh/ Date of birth'] || '';
+            document.getElementById('out_contract').innerText = nguoi['Loại Hợp Đồng/ Type of Contract'] || '';
+        }
+    </script>
+
+</body>
+</html>
