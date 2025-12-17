@@ -77,10 +77,12 @@
             if (keyword.length < 1) return;
 
             // Lọc dữ liệu (Sử dụng đúng tên cột trong Google Sheet của bạn)
-            const ketQua = database.filter(dong => {
-                const ten = dong['Họ và Tên/ Name'] || ''; 
-                return ten.toLowerCase().includes(keyword);
-            });
+      // Lọc dữ liệu (Cách mới: Tìm bất kỳ cột nào cũng được)
+const ketQua = database.filter(dong => {
+    // Lấy tất cả giá trị của dòng đó gộp lại thành chuỗi để tìm
+    const toanBoDong = Object.values(dong).join(' ').toLowerCase();
+    return toanBoDong.includes(keyword);
+});
 
             // Hiển thị danh sách kết quả
             if (ketQua.length === 0) {
