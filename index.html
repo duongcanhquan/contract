@@ -365,9 +365,9 @@
         <p class="text-muted small">Vui lòng không tắt trình duyệt.</p>
     </div>
 
-    <script>
-        // LINK APP SCRIPT CỦA BẠN (ĐÃ UPDATE THEO LIÊN KẾT BẠN CUNG CẤP)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw87HZs1wxmfICHvumBuEUv6sP6j8rg_q61zkAV5-L-HpHBcLdwr1G0b14U4xseHl4LSg/exec";
+  <script>
+        // LINK SCRIPT CỦA BẠN
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_0_1iAYlHxx7BRPx0MkaLQZhYK8KEijEV4O4R2NOqCRTcuUdz-bWqbq1B_IiIXHQcaA/exec";
 
         function checkContractType() {
             const select = document.getElementById('contractType');
@@ -381,7 +381,6 @@
             }
         }
 
-        // Hàm chính gửi form
         function submitForm() {
             const form = document.getElementById('hrForm');
             if (!form.checkValidity()) {
@@ -394,40 +393,56 @@
             loadingOverlay.classList.remove('d-none');
             loadingText.innerText = "Đang kết nối Server... (Vui lòng đợi)";
 
-            // 1. Lấy dữ liệu Text từ form
             const formData = new FormData(form);
             const dataObj = {};
             formData.forEach((value, key) => {
-                if(key !== 'images') dataObj[key] = value; 
+                if(key !== 'images') dataObj[key] = value;
             });
 
-            // 2. Gửi Text để lưu vào Sheet và tạo Folder
+            // Gửi dữ liệu với cơ chế bắt lỗi chi tiết
             fetch(SCRIPT_URL, {
                 method: "POST",
-                mode: "cors", // Cho phép gửi request chéo domain
+                mode: "no-cors", // Thử chế độ no-cors nếu vẫn lỗi, nhưng thường text/plain là đủ
+                redirect: "follow",
                 headers: {
-                    "Content-Type": "text/plain;charset=utf-8" // QUAN TRỌNG: Để tránh lỗi CORS Preflight
+                    "Content-Type": "text/plain;charset=utf-8"
                 },
                 body: JSON.stringify({ action: "SAVE_INFO", payload: dataObj })
             })
-            .then(response => response.json())
             .then(response => {
-                if (response.status === 'SUCCESS') {
-                    loadingText.innerText = "Đang lưu ảnh... (Vui lòng giữ nguyên tab)";
-                    uploadPhotos(response.folderId);
-                } else {
-                    alert('Lỗi Server: ' + response.message);
+                // Google Apps Script redirect nên ta cần xử lý text thay vì json ngay
+                return response.text();
+            })
+            .then(text => {
+                // Cố gắng parse JSON, nếu không được nghĩa là lỗi HTML
+                try {
+                    const response = JSON.parse(text);
+                    if (response.status === 'SUCCESS') {
+                        loadingText.innerText = "Đang lưu ảnh... (Giữ nguyên tab)";
+                        uploadPhotos(response.folderId);
+                    } else {
+                        throw new Error(response.message || "Lỗi không xác định từ Server");
+                    }
+                } catch (e) {
+                    // Nếu parse lỗi, có thể do Google trả về lỗi HTML hoặc redirect
+                    // Do dùng fetch text/plain, đôi khi response rỗng hoặc redirect mờ
+                    // Ta giả định thành công nếu không có lỗi mạng nghiêm trọng ở bước này
+                    // (Đây là hạn chế của việc gọi GAS từ domain khác)
+                    console.log("Raw response:", text);
+                    
+                    // NẾU CODE BẠN CHUẨN, NÓ SẼ RA JSON. 
+                    // NẾU VÀO ĐÂY, THƯỜNG LÀ DO SCRIPT CHƯA DEPLOY BẢN MỚI
+                    alert("Lỗi dữ liệu trả về: " + text.substring(0, 100) + "... \n\nHãy kiểm tra lại bước Deploy New Version trong Apps Script!");
                     loadingOverlay.classList.add('d-none');
                 }
             })
             .catch(error => {
                 console.error(error);
-                alert('Lỗi kết nối! Vui lòng thử lại.');
+                alert('Lỗi kết nối mạng: ' + error.message);
                 loadingOverlay.classList.add('d-none');
             });
         }
 
-        // Hàm upload ảnh
         async function uploadPhotos(folderId) {
             const fileInput = document.getElementById('fileInput');
             const files = fileInput.files;
@@ -439,28 +454,17 @@
             }
 
             let uploadedCount = 0;
-            
-            // Upload từng ảnh một (Tuần tự để tránh quá tải)
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
                 loadingText.innerText = `Đang tải ảnh ${i + 1}/${files.length}...`;
-                
                 try {
                     const base64Data = await convertToBase64(file);
-                    
                     await fetch(SCRIPT_URL, {
                         method: "POST",
-                        mode: "cors",
-                        headers: {
-                            "Content-Type": "text/plain;charset=utf-8"
-                        },
+                        headers: { "Content-Type": "text/plain;charset=utf-8" },
                         body: JSON.stringify({ 
                             action: "UPLOAD_FILE", 
-                            payload: {
-                                folderId: folderId,
-                                fileName: file.name,
-                                dataStr: base64Data
-                            }
+                            payload: { folderId: folderId, fileName: file.name, dataStr: base64Data }
                         })
                     });
                     uploadedCount++;
@@ -468,11 +472,9 @@
                     console.error("Lỗi upload ảnh: ", file.name, err);
                 }
             }
-            
             finishSubmission();
         }
 
-        // Hàm hỗ trợ chuyển file sang Base64
         function convertToBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
