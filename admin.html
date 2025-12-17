@@ -207,24 +207,50 @@
             fields.forEach(f => { if(document.getElementById(f)) document.getElementById(f).value = u[f] || ''; });
         }
 
-        function submitUpdate(onlySave) {
+      function submitUpdate(onlySave) {
             const msg = onlySave ? "Chỉ lưu thay đổi vào Sheet?" : "Lưu thay đổi và TẠO HỢP ĐỒNG?";
             if(!confirm(msg)) return;
-            const btn = onlySave ? document.getElementById('btnSaveOnly') : document.getElementById('btnCreate');
-            const oldText = btn.innerHTML; btn.innerHTML = 'Đang xử lý...'; btn.disabled=true;
 
+            // 1. Khóa nút bấm để tránh bấm nhiều lần
+            const btn = onlySave ? document.getElementById('btnSaveOnly') : document.getElementById('btnCreate');
+            const oldText = btn.innerHTML; 
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Đang xử lý...'; 
+            btn.disabled = true;
+
+            // 2. Thu thập dữ liệu
             const payload = {};
             const inputs = document.querySelectorAll('input, select');
             inputs.forEach(el => payload[el.id] = el.value);
             payload.onlySave = onlySave;
 
+            // 3. Gửi dữ liệu
             fetch(SCRIPT_URL, {
-                method: 'POST', redirect: 'follow', headers: {'Content-Type': 'text/plain;charset=utf-8'},
+                method: 'POST', 
+                redirect: 'follow', 
+                headers: {'Content-Type': 'text/plain;charset=utf-8'},
                 body: JSON.stringify({ action: 'UPDATE_CONTRACT', payload: payload })
-            }).then(r=>r.json()).then(data => {
+            })
+            .then(r => r.json())
+            .then(data => {
+                // 4. THÔNG BÁO THÀNH CÔNG
                 alert('✅ ' + data.message);
-                if(!onlySave) location.reload(); else { btn.disabled=false; btn.innerHTML=oldText; }
-            }).catch(e => { alert('Lỗi: '+e); btn.disabled=false; btn.innerHTML=oldText; });
+
+                // --- SỬA LỖI TẠI ĐÂY: KHÔNG RELOAD TRANG NỮA ---
+                // Thay vì location.reload(), ta chỉ reset nút bấm
+                btn.disabled = false;
+                btn.innerHTML = oldText;
+
+                // Tùy chọn: Cuộn lên ô tìm kiếm để bạn làm người tiếp theo luôn
+                document.querySelector('.search-area').scrollIntoView({ behavior: 'smooth' });
+                
+                // Nếu muốn xóa trắng form để tránh nhầm lẫn thì bỏ comment dòng dưới:
+                // document.getElementById('adminForm').classList.add('hidden');
+            })
+            .catch(e => {
+                alert('Lỗi kết nối: ' + e);
+                btn.disabled = false;
+                btn.innerHTML = oldText;
+            });
         }
         document.addEventListener('click', function(e) { if (!e.target.closest('.search-area')) document.getElementById('suggestion-box').style.display = 'none'; });
     </script>
