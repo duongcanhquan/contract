@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Tìm Kiếm Dữ Liệu</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .box { border: 1px solid #ccc; padding: 20px; margin-top: 10px; }
+        input { padding: 10px; width: 300px; font-size: 16px; }
+        #status { font-weight: bold; color: blue; margin-bottom: 10px; }
+        .item { padding: 5px; border-bottom: 1px dashed #ddd; cursor: pointer; }
+        .item:hover { background-color: #f0f0f0; color: blue; }
+        
+        /* Khu vực hiển thị chi tiết sau khi chọn */
+        #detail-area { background: #e8f5e9; padding: 15px; display: none; margin-top: 20px; border: 1px solid green; }
+    </style>
+</head>
+<body>
+
+    <h2>🛠️ CÔNG CỤ TEST TÌM KIẾM DỮ LIỆU</h2>
+    
+    <div id="status">Đang kết nối tới N8N...</div>
+
+    <input type="text" id="searchInp" placeholder="Gõ tên để tìm kiếm..." disabled>
+
+    <div id="resultList" class="box"></div>
+
+    <div id="detail-area">
+        <h3>✅ Dữ liệu lấy được của người này:</h3>
+        <p><strong>Họ tên:</strong> <span id="out_name"></span></p>
+        <p><strong>Email:</strong> <span id="out_email"></span></p>
+        <p><strong>SĐT:</strong> <span id="out_phone"></span></p>
+        <p><strong>CMND:</strong> <span id="out_cmnd"></span></p>
+    </div>
+
+    <script>
+        // 🔴 BẠN DÁN LINK CỦA BẠN VÀO ĐÂY NHÉ:
+        const API_URL = "https://apchn-host.lapage.vn/webhook/lay-nguon-data"; 
+
+        let database = []; // Biến chứa toàn bộ dữ liệu từ Google Sheet
+        const statusDiv = document.getElementById('status');
+        const searchInp = document.getElementById('searchInp');
+        const resultList = document.getElementById('resultList');
+        const detailArea = document.getElementById('detail-area');
+
+        // 1. KHI MỞ FILE LÊN -> TỰ ĐỘNG GỌI N8N ĐỂ LẤY DATA
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(data => {
+                // Xử lý dữ liệu trả về (Có thể N8N trả về dạng {data: []} hoặc [])
+                if(Array.isArray(data)) {
+                    database = data;
+                } else if (data.data) {
+                    database = data.data;
+                }
+                
+                statusDiv.innerText = `✅ Đã tải xong ${database.length} dòng dữ liệu! Hãy gõ tìm kiếm.`;
+                statusDiv.style.color = "green";
+                searchInp.disabled = false; // Mở khóa ô nhập
+                searchInp.focus();
+                
+                // In thử dữ liệu ra Console cho bạn xem (nhấn F12 để thấy)
+                console.log("Dữ liệu gốc:", database);
+            })
+            .catch(err => {
+                statusDiv.innerText = "❌ Lỗi: Không lấy được dữ liệu. Kiểm tra lại Link hoặc Header CORS trên N8N.";
+                statusDiv.style.color = "red";
+                console.error(err);
+            });
+
+        // 2. LẮNG NGHE SỰ KIỆN GÕ PHÍM (TÌM KIẾM)
+        searchInp.addEventListener('input', function() {
+            const keyword = this.value.toLowerCase();
+            resultList.innerHTML = ''; // Xóa kết quả cũ
+            detailArea.style.display = 'none'; // Ẩn chi tiết cũ
+
+            if (keyword.length < 1) return;
+
+            // Lọc dữ liệu (Sử dụng đúng tên cột trong Google Sheet của bạn)
+            const ketQua = database.filter(dong => {
+                const ten = dong['Họ và Tên/ Name'] || ''; 
+                return ten.toLowerCase().includes(keyword);
+            });
+
+            // Hiển thị danh sách kết quả
+            if (ketQua.length === 0) {
+                resultList.innerHTML = '<div style="color:gray">Không tìm thấy ai...</div>';
+            } else {
+                ketQua.forEach(nguoi => {
+                    const div = document.createElement('div');
+                    div.className = 'item';
+                    div.innerText = `👤 ${nguoi['Họ và Tên/ Name']} - 📧 ${nguoi['Email cá nhân/ Email']}`;
+                    
+                    // Khi bấm vào 1 người -> Hiện chi tiết
+                    div.onclick = () => hienThiChiTiet(nguoi);
+                    
+                    resultList.appendChild(div);
+                });
+            }
+        });
+
+        // 3. HÀM HIỂN THỊ CHI TIẾT
+        function hienThiChiTiet(nguoi) {
+            detailArea.style.display = 'block';
+            
+            // Đưa dữ liệu vào HTML
+            document.getElementById('out_name').innerText = nguoi['Họ và Tên/ Name'];
+            document.getElementById('out_email').innerText = nguoi['Email cá nhân/ Email'];
+            document.getElementById('out_phone').innerText = nguoi['Số điện thoại liên hệ/ Phone number'];
+            document.getElementById('out_cmnd').innerText = nguoi['Số CMND/ ID'];
+        }
+    </script>
+
+</body>
+</html>
