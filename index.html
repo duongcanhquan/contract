@@ -1,179 +1,273 @@
+// Node Code để chứa HTML
+const html = `
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Tra Cứu Nhân Sự (Fix Vị Trí)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THÔNG TIN NHÂN SỰ - APCHN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 20px; background-color: #f4f7f6; }
-        .container { max-width: 700px; margin: 0 auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #2c3e50; }
-        
-        input { padding: 14px; width: 100%; box-sizing: border-box; font-size: 16px; border: 2px solid #e0e0e0; border-radius: 6px; outline: none; transition: 0.3s; }
-        input:focus { border-color: #3498db; box-shadow: 0 0 8px rgba(52,152,219,0.2); }
-        
-        #status { text-align: center; margin: 15px 0; font-weight: 600; }
-        
-        /* Danh sách kết quả */
-        #resultList { margin-top: 15px; max-height: 400px; overflow-y: auto; display: none; border: 1px solid #eee; border-radius: 6px; }
-        .item { padding: 12px 15px; border-bottom: 1px solid #f1f1f1; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .item:hover { background-color: #e8f4fc; }
-        .item-name { font-weight: bold; color: #2c3e50; font-size: 15px; }
-        .item-email { color: #7f8c8d; font-size: 13px; }
-
-        /* Bảng chi tiết */
-        #detail-area { background: #fff; border: 1px solid #27ae60; padding: 20px; border-radius: 8px; margin-top: 20px; display: none; position: relative; }
-        #detail-area h3 { margin-top: 0; color: #27ae60; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .row { margin-bottom: 12px; display: flex; }
-        .label { font-weight: bold; width: 140px; color: #555; flex-shrink: 0; }
-        .val { color: #333; word-break: break-word; }
-        .close-btn { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 20px; color: #aaa; }
-        .close-btn:hover { color: #e74c3c; }
+        body { background-color: #f4f6f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .container { max-width: 900px; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 30px; margin-bottom: 30px;}
+        h2 { color: #2c3e50; font-weight: 700; border-bottom: 2px solid #3498db; padding-bottom: 15px; margin-bottom: 30px; }
+        .form-label { font-weight: 600; color: #34495e; }
+        .section-title { background: #eaf2f8; padding: 10px 15px; border-radius: 8px; color: #2980b9; font-weight: bold; margin-top: 30px; margin-bottom: 20px; }
+        .btn-submit { background: #27ae60; border: none; padding: 12px 40px; font-size: 18px; font-weight: bold; width: 100%; transition: 0.3s; }
+        .btn-submit:hover { background: #219150; }
+        .note { font-size: 0.9em; color: #7f8c8d; font-style: italic; }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="text-center mb-4">
+            <img src="https://apchn.vn/wp-content/uploads/2023/08/logo-apchn.png" alt="Logo" style="max-height: 80px;">
+            <h2 class="mt-3">THÔNG TIN NHÂN SỰ / HR INFORMATION</h2>
+        </div>
 
-<div class="container">
-    <h2>🛠️ CÔNG CỤ TRA CỨU NHÂN SỰ</h2>
-    <div id="status" style="color:orange">⏳ Đang tải dữ liệu...</div>
+        <form id="hrForm" enctype="multipart/form-data">
+            
+            <div class="section-title">1. Thông tin cá nhân / Personal Information</div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Họ và tên / Full Name *</label>
+                    <input type="text" class="form-control" name="ho_ten" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Giới tính / Gender *</label>
+                    <select class="form-select" name="gioi_tinh" required>
+                        <option value="">Chọn/Select</option>
+                        <option value="Nam">Nam / Male</option>
+                        <option value="Nữ">Nữ / Female</option>
+                    </select>
+                </div>
+                 <div class="col-md-3">
+                    <label class="form-label">Quốc tịch / Nationality</label>
+                    <input type="text" class="form-control" name="quoc_tich" value="Việt Nam">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Ngày sinh / Date of Birth *</label>
+                    <input type="date" class="form-control" name="ngay_sinh" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Nơi sinh / Place of Birth</label>
+                    <input type="text" class="form-control" name="noi_sinh">
+                </div>
+                 <div class="col-md-6">
+                    <label class="form-label">Số điện thoại / Phone *</label>
+                    <input type="text" class="form-control" name="so_dien_thoai" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Email cá nhân / Personal Email *</label>
+                    <input type="email" class="form-control" name="email" required>
+                </div>
+                 <div class="col-md-6">
+                    <label class="form-label">Tình trạng hôn nhân / Marital Status</label>
+                    <select class="form-select" name="hon_nhan">
+                        <option value="Độc thân">Độc thân / Single</option>
+                        <option value="Đã kết hôn">Đã kết hôn / Married</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Địa chỉ thường trú / Permanent Address</label>
+                    <input type="text" class="form-control" name="dia_chi_thuong_tru">
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Nơi ở hiện tại / Current Address</label>
+                    <input type="text" class="form-control" name="noi_o_hien_tai">
+                </div>
+            </div>
 
-    <input type="text" id="searchInp" placeholder="🔍 Gõ tên hoặc email để tìm..." disabled>
-    
-    <div id="resultList"></div>
+            <div class="section-title">2. Giấy tờ tùy thân / ID Card</div>
+             <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Số CCCD / ID Number *</label>
+                    <input type="text" class="form-control" name="so_cccd" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Ngày Cấp / Date of Issue</label>
+                    <input type="date" class="form-control" name="ngay_cap_cccd">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Nơi cấp / Place of Issue</label>
+                    <input type="text" class="form-control" name="noi_cap_cccd">
+                </div>
+             </div>
 
-    <div id="detail-area">
-        <span class="close-btn" onclick="dongChiTiet()">×</span>
-        <h3>✅ Thông tin chi tiết</h3>
-        <div class="row"><span class="label">Họ và Tên:</span> <span class="val" id="out_name"></span></div>
-        <div class="row"><span class="label">Email:</span> <span class="val" id="out_email"></span></div>
-        <div class="row"><span class="label">Số điện thoại:</span> <span class="val" id="out_phone"></span></div>
-        <div class="row"><span class="label">Hợp đồng:</span> <span class="val" id="out_contract"></span></div>
-        <div class="row"><span class="label">Giới tính:</span> <span class="val" id="out_gender"></span></div>
-        <div class="row"><span class="label">Dữ liệu thô:</span> <span class="val" id="out_raw" style="font-size:11px; color:#999"></span></div>
+            <div class="section-title">3. Trình độ học vấn / Education</div>
+             <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Trình độ / Degree</label>
+                    <select class="form-select" name="trinh_do">
+                        <option value="Cao đẳng">Cao đẳng</option>
+                        <option value="Đại học">Đại học</option>
+                        <option value="Thạc Sỹ">Thạc Sỹ</option>
+                        <option value="Tiến Sỹ">Tiến Sỹ</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Chuyên ngành / Major</label>
+                    <input type="text" class="form-control" name="chuyen_nganh">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Trường đào tạo / University</label>
+                    <input type="text" class="form-control" name="truong_dao_tao">
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Bằng cấp khác (nếu có)</label>
+                    <input type="text" class="form-control" name="bang_cap_khac">
+                </div>
+             </div>
+
+             <div class="section-title">4. Thông tin Ngân hàng & Thuế / Bank & Tax</div>
+             <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Tên chủ tài khoản</label>
+                    <input type="text" class="form-control" name="ten_tk_ngan_hang" style="text-transform: uppercase;">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Số tài khoản</label>
+                    <input type="text" class="form-control" name="so_tk_ngan_hang">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Ngân hàng - Chi nhánh</label>
+                    <input type="text" class="form-control" name="chi_nhanh_ngan_hang" placeholder="VD: VCB - CN Hà Nội">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Mã số thuế cá nhân</label>
+                    <input type="text" class="form-control" name="mst_ca_nhan">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Nơi cấp MST</label>
+                    <input type="text" class="form-control" name="noi_cap_mst">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Ngày cấp MST</label>
+                    <input type="date" class="form-control" name="ngay_cap_mst">
+                </div>
+                 <div class="col-md-12">
+                    <label class="form-label">Số sổ BHXH (Nếu có)</label>
+                    <input type="text" class="form-control" name="so_bhxh" placeholder="Thầy cô thỉnh giảng không cần điền">
+                </div>
+             </div>
+
+             <div class="section-title">5. Gia đình & Người phụ thuộc / Family & Dependents</div>
+             <div class="row g-3">
+                <div class="col-md-12"><label class="form-label text-primary">Thông tin con (Họ tên - Ngày sinh)</label></div>
+                <div class="col-md-4"><input type="text" class="form-control" name="con_1" placeholder="Con 1"></div>
+                <div class="col-md-4"><input type="text" class="form-control" name="con_2" placeholder="Con 2"></div>
+                <div class="col-md-4"><input type="text" class="form-control" name="con_3" placeholder="Con 3"></div>
+                
+                <div class="col-md-12 mt-3"><label class="form-label text-primary">Người phụ thuộc (Giảm trừ gia cảnh)</label></div>
+                <div class="col-md-4"><input type="text" class="form-control" name="npt_1_ten" placeholder="Họ tên NPT 1"></div>
+                <div class="col-md-4"><input type="text" class="form-control" name="npt_1_mst" placeholder="MST NPT 1"></div>
+                <div class="col-md-4"><input type="text" class="form-control" name="npt_1_qh" placeholder="Mối quan hệ"></div>
+                <div class="col-md-4"><input type="text" class="form-control" name="npt_2_ten" placeholder="Họ tên NPT 2"></div>
+                <div class="col-md-4"><input type="text" class="form-control" name="npt_2_mst" placeholder="MST NPT 2"></div>
+                <div class="col-md-4"><input type="text" class="form-control" name="npt_2_qh" placeholder="Mối quan hệ"></div>
+
+                <div class="col-md-12 mt-3">
+                    <label class="form-label text-danger">Liên hệ khẩn cấp (Tên - SĐT - Quan hệ)</label>
+                    <input type="text" class="form-control" name="lien_he_khan_cap" required>
+                </div>
+             </div>
+
+             <div class="section-title">6. Thông tin công việc & Ảnh / Job & Photos</div>
+             <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Loại hợp đồng / Contract Type</label>
+                    <select class="form-select" name="loai_hop_dong" id="contractType" onchange="checkContractType()">
+                        <option value="Hợp đồng thỉnh giảng">Hợp đồng thỉnh giảng</option>
+                        <option value="Hợp đồng chính thức">Hợp đồng chính thức</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                    <input type="text" class="form-control mt-2 d-none" name="loai_hop_dong_khac" id="otherContract" placeholder="Nhập loại hợp đồng...">
+                </div>
+                 <div class="col-md-6">
+                    <label class="form-label">Phòng ban / Department</label>
+                    <select class="form-select" name="phong_ban">
+                        <option value="Phòng NSVH">Phòng NSVH</option>
+                        <option value="Phòng MKT">Phòng MKT</option>
+                        <option value="Phòng Kinh doanh">Phòng Kinh doanh</option>
+                        <option value="Phòng Đào tạo">Phòng Đào tạo</option>
+                        <option value="Ban Lãnh Đạo">Ban Lãnh Đạo</option>
+                        <option value="Phòng Tuyển sinh">Phòng Tuyển sinh</option>
+                        <option value="Phòng Kế toán">Phòng Kế toán</option>
+                        <option value="Thư ký khoa">Thư ký khoa</option>
+                        <option value="Khoa CH">Khoa CH</option>
+                        <option value="Khoa BCH">Khoa BCH</option>
+                    </select>
+                </div>
+                
+                <div class="col-12">
+                    <label class="form-label">Ảnh hồ sơ cá nhân (Tối đa 5 ảnh) *</label>
+                    <input type="file" class="form-control" name="images" multiple accept="image/*" required>
+                    <div class="note mt-1">Vui lòng chọn tối đa 5 ảnh (JPG, PNG). Hệ thống sẽ tự tạo thư mục lưu trữ tên bạn.</div>
+                </div>
+             </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary btn-submit" id="btnSubmit">GỬI THÔNG TIN / SUBMIT</button>
+            </div>
+            <div id="loading" class="text-center mt-3 d-none">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p>Đang xử lý dữ liệu, vui lòng đợi... / Processing...</p>
+            </div>
+        </form>
     </div>
-</div>
 
-<script>
-    // 🔴 LINK API CỦA BẠN
-    const API_URL = "https://apchn-host.lapage.vn/webhook/api-get-candidates"; 
-
-    let database = []; 
-    // Biến lưu Tên Cột (Key)
-    let KEY_NAME = ""; 
-    let KEY_EMAIL = "";
-    let KEY_PHONE = "";
-    let KEY_CONTRACT = "";
-    let KEY_GENDER = "";
-
-    const statusDiv = document.getElementById('status');
-    const searchInp = document.getElementById('searchInp');
-    const resultList = document.getElementById('resultList');
-    const detailArea = document.getElementById('detail-area');
-
-    // 1. TẢI DỮ LIỆU
-    fetch(API_URL)
-        .then(response => response.json())
-        .then(data => {
-            let rawData = [];
-            if (Array.isArray(data)) rawData = data;
-            else if (data.data && Array.isArray(data.data)) rawData = data.data;
-            else rawData = [data];
-
-            database = rawData.map(item => item.json ? item.json : item);
-
-            if (database.length > 0) {
-                // 🔥 CHIẾN THUẬT LẤY THEO VỊ TRÍ CỘT (INDEX) 🔥
-                // Dựa trên ảnh Google Sheet của bạn:
-                // Cột A (Index 0): Timestamp
-                // Cột B (Index 1): Họ và Tên (TARGET)
-                // Cột C (Index 2): Loại Hợp Đồng
-                // Cột D (Index 3): Giới tính
-                // Cột F (Index 5): Số điện thoại
-                // Cột G (Index 6): Email
-                
-                const sampleRow = database[0];
-                const allKeys = Object.keys(sampleRow); // Lấy danh sách tên cột
-                
-                // Gán cứng theo vị trí để tránh sai tên
-                // Lưu ý: Nếu n8n trả về thứ tự đúng thì keys[1] chính là Cột B
-                KEY_NAME = allKeys[1];      // Cột B
-                KEY_CONTRACT = allKeys[2];  // Cột C
-                KEY_GENDER = allKeys[3];    // Cột D
-                
-                // Riêng Email và SĐT mình tìm theo tên cho chắc ăn vì nó ở xa
-                KEY_PHONE = allKeys.find(k => k.toLowerCase().includes("phone") || k.toLowerCase().includes("điện thoại")) || allKeys[5];
-                KEY_EMAIL = allKeys.find(k => k.toLowerCase().includes("email")) || allKeys[6];
-
-                statusDiv.innerHTML = `✅ Đã tải ${database.length} hồ sơ.<br><span style="font-size:12px; font-weight:normal; color:#555">Đang lấy cột Tên là: [${KEY_NAME}]</span>`;
-                statusDiv.style.color = "green";
-                searchInp.disabled = false;
-                searchInp.focus();
+    <script>
+        function checkContractType() {
+            const select = document.getElementById('contractType');
+            const otherInput = document.getElementById('otherContract');
+            if(select.value === 'Khác') {
+                otherInput.classList.remove('d-none');
             } else {
-                statusDiv.innerText = "⚠️ Không có dữ liệu.";
+                otherInput.classList.add('d-none');
             }
-        })
-        .catch(err => {
-            statusDiv.innerText = "❌ Lỗi: " + err.message;
-            statusDiv.style.color = "red";
-        });
-
-    // 2. TÌM KIẾM
-    searchInp.addEventListener('input', function() {
-        const keyword = this.value.toLowerCase().trim();
-        resultList.innerHTML = ''; 
-        dongChiTiet();
-
-        if (keyword.length < 1) {
-            resultList.style.display = 'none';
-            return;
         }
 
-        // Tìm trong Tên hoặc Email
-        const ketQua = database.filter(dong => {
-            const ten = String(dong[KEY_NAME] || '').toLowerCase();
-            const email = String(dong[KEY_EMAIL] || '').toLowerCase();
-            return ten.includes(keyword) || email.includes(keyword);
+        document.getElementById('hrForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btnSubmit');
+            const loading = document.getElementById('loading');
+            
+            btn.classList.add('d-none');
+            loading.classList.remove('d-none');
+
+            const formData = new FormData(this);
+            // Gửi tới Webhook POST của N8N
+            // LƯU Ý: Thay đổi đường dẫn này bằng link Webhook POST của bạn
+            const webhookUrl = '/webhook/submit-ho-so'; 
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    alert('Gửi thông tin thành công! Cảm ơn bạn.');
+                    window.location.reload();
+                } else {
+                    alert('Có lỗi xảy ra. Vui lòng thử lại.');
+                    btn.classList.remove('d-none');
+                    loading.classList.add('d-none');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Lỗi kết nối tới máy chủ.');
+                btn.classList.remove('d-none');
+                loading.classList.add('d-none');
+            }
         });
-
-        resultList.style.display = 'block';
-
-        if (ketQua.length === 0) {
-            resultList.innerHTML = '<div style="padding:15px; color:#999; text-align:center">Không tìm thấy ai...</div>';
-        } else {
-            ketQua.forEach(nguoi => {
-                const div = document.createElement('div');
-                div.className = 'item';
-                
-                // Hiển thị dùng đúng Key đã bắt được
-                div.innerHTML = `
-                    <span class="item-name">${nguoi[KEY_NAME]}</span>
-                    <span class="item-email">${nguoi[KEY_EMAIL] || 'Không có email'}</span>
-                `;
-                
-                div.onclick = () => hienThiChiTiet(nguoi);
-                resultList.appendChild(div);
-            });
-        }
-    });
-
-    // 3. HIỂN THỊ CHI TIẾT
-    function hienThiChiTiet(nguoi) {
-        detailArea.style.display = 'block';
-        resultList.style.display = 'none'; // Ẩn danh sách
-        
-        document.getElementById('out_name').innerText = nguoi[KEY_NAME] || '';
-        document.getElementById('out_email').innerText = nguoi[KEY_EMAIL] || '';
-        document.getElementById('out_phone').innerText = nguoi[KEY_PHONE] || '';
-        document.getElementById('out_contract').innerText = nguoi[KEY_CONTRACT] || '';
-        document.getElementById('out_gender').innerText = nguoi[KEY_GENDER] || '';
-        
-        // In toàn bộ dòng đó ra để debug nếu cần
-        document.getElementById('out_raw').innerText = JSON.stringify(nguoi);
-    }
-
-    function dongChiTiet() {
-        detailArea.style.display = 'none';
-    }
-</script>
-
+    </script>
 </body>
 </html>
+`;
+
+return {
+  json: { html: html }
+};
