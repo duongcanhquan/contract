@@ -10,7 +10,7 @@
     
     <style>
         :root {
-            --primary-color: #0056b3; /* Đổi màu xanh đậm hơn cho hợp logo trường */
+            --primary-color: #0056b3; 
             --bg-color: #f0f2f5;
             --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
         }
@@ -40,14 +40,14 @@
         }
 
         .logo-img {
-            max-width: 300px; /* Điều chỉnh kích thước logo cho cân đối */
+            max-width: 300px;
             height: auto;
             margin-bottom: 10px;
             display: inline-block;
         }
 
         .form-title {
-            color: #b71c1c; /* Màu đỏ đô cho tiêu đề (theo tông logo) */
+            color: #b71c1c;
             font-weight: 700;
             font-size: 1.6rem;
             text-transform: uppercase;
@@ -125,7 +125,7 @@
                 padding: 20px 15px;
             }
             .logo-img {
-                max-width: 200px; /* Logo nhỏ hơn trên điện thoại */
+                max-width: 200px;
             }
             .form-title {
                 font-size: 1.3rem;
@@ -366,7 +366,7 @@
     </div>
 
     <script>
-        // LINK APP SCRIPT CỦA BẠN (ĐÃ UPDATE THEO LINK BẠN GỬI)
+        // LINK APP SCRIPT CỦA BẠN (ĐÃ UPDATE THEO LIÊN KẾT BẠN CUNG CẤP)
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw87HZs1wxmfICHvumBuEUv6sP6j8rg_q61zkAV5-L-HpHBcLdwr1G0b14U4xseHl4LSg/exec";
 
         function checkContractType() {
@@ -389,7 +389,6 @@
                 return;
             }
 
-            // Hiển thị loading
             const loadingOverlay = document.getElementById('loadingOverlay');
             const loadingText = document.getElementById('loadingText');
             loadingOverlay.classList.remove('d-none');
@@ -399,13 +398,16 @@
             const formData = new FormData(form);
             const dataObj = {};
             formData.forEach((value, key) => {
-                if(key !== 'images') dataObj[key] = value; // Bỏ qua file trong bước này
+                if(key !== 'images') dataObj[key] = value; 
             });
 
             // 2. Gửi Text để lưu vào Sheet và tạo Folder
             fetch(SCRIPT_URL, {
                 method: "POST",
-                // Quan trọng: Dùng text/plain để tránh lỗi CORS Preflight của Google
+                mode: "cors", // Cho phép gửi request chéo domain
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8" // QUAN TRỌNG: Để tránh lỗi CORS Preflight
+                },
                 body: JSON.stringify({ action: "SAVE_INFO", payload: dataObj })
             })
             .then(response => response.json())
@@ -420,7 +422,7 @@
             })
             .catch(error => {
                 console.error(error);
-                alert('Lỗi kết nối! Kiểm tra mạng hoặc liên hệ Admin.');
+                alert('Lỗi kết nối! Vui lòng thử lại.');
                 loadingOverlay.classList.add('d-none');
             });
         }
@@ -448,6 +450,10 @@
                     
                     await fetch(SCRIPT_URL, {
                         method: "POST",
+                        mode: "cors",
+                        headers: {
+                            "Content-Type": "text/plain;charset=utf-8"
+                        },
                         body: JSON.stringify({ 
                             action: "UPLOAD_FILE", 
                             payload: {
