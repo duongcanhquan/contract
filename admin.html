@@ -1,0 +1,244 @@
+<body>
+
+    <div id="loginScreen" class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="card-custom p-5" style="width: 100%; max-width: 450px;">
+            <div class="text-center mb-4">
+                <img src="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp" alt="Logo" style="max-height: 60px;">
+                <h4 class="mt-3 fw-bold text-primary">HR ADMIN LOGIN</h4>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold">Tài khoản / Username</label>
+                <input type="text" id="adminUser" class="form-control form-control-lg" placeholder="Enter username...">
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Mật khẩu / Password</label>
+                <input type="password" id="adminPass" class="form-control form-control-lg" placeholder="Enter password...">
+            </div>
+
+            <button class="btn btn-primary w-100 py-3 fw-bold" onclick="login()">ĐĂNG NHẬP / LOGIN</button>
+            
+            <div class="text-center mt-3">
+                <a href="./index.html" class="text-decoration-none small text-muted">← Quay lại trang Ứng viên</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard" class="container hidden">
+        <div class="card-custom">
+            <div class="card-header-custom d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-people-fill"></i> QUẢN LÝ HỢP ĐỒNG / CONTRACT MANAGER</span>
+                <button class="btn btn-sm btn-outline-light" onclick="location.reload()">Đăng xuất / Logout</button>
+            </div>
+            
+            <div class="card-body p-4 p-md-5">
+                <div class="mb-5">
+                    <label class="form-label fw-bold text-primary mb-2">🔍 Tìm kiếm Ứng viên / Search Candidate (Name or ID)</label>
+                    <div class="search-wrapper">
+                        <input type="text" id="searchKeyword" class="form-control" 
+                               placeholder="Gõ tên hoặc số CCCD để tìm kiếm... / Type Name or ID..." 
+                               autocomplete="off" onkeyup="handleTyping()">
+                        <div id="suggestion-box"></div>
+                        <div id="searching" class="mt-2 text-muted small hidden">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status"></div> 
+                            Đang tìm dữ liệu... / Searching...
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contractForm" class="hidden">
+                    <div class="row g-4">
+                        <div class="col-lg-5">
+                            <div class="p-3 bg-white border rounded h-100">
+                                <div class="section-title">Thông tin Hồ sơ / Profile Info (Read-only)</div>
+                                <div class="mb-3"><label class="form-label small text-muted">Họ và tên</label><input type="text" id="ho_ten" class="form-control read-only-field" readonly></div>
+                                <div class="row g-2 mb-3">
+                                    <div class="col-6"><label class="form-label small text-muted">Số CCCD</label><input type="text" id="so_cccd" class="form-control read-only-field" readonly></div>
+                                    <div class="col-6"><label class="form-label small text-muted">Ngày sinh</label><input type="text" id="ngay_sinh" class="form-control read-only-field" readonly></div>
+                                </div>
+                                <div class="mb-3"><label class="form-label small text-muted">Email</label><input type="text" id="email" class="form-control read-only-field" readonly></div>
+                                <div class="mb-3"><label class="form-label small text-muted">Số điện thoại</label><input type="text" id="so_dien_thoai" class="form-control read-only-field" readonly></div>
+                                <div class="mb-3"><label class="form-label small text-muted">Địa chỉ</label><input type="text" id="dia_chi" class="form-control read-only-field" readonly></div>
+                                <input type="hidden" id="rowIndex"><input type="hidden" id="folderUrl">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            <div class="p-4 bg-light border rounded h-100">
+                                <div class="section-title text-primary">Thiết lập Hợp đồng / Contract Setup</div>
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label class="form-label fw-bold">1. Loại hợp đồng / Contract Type <span class="text-danger">*</span></label>
+                                        <select id="loai_hop_dong_admin" class="form-select border-primary">
+                                            <option value="">-- Chọn loại HĐ / Select Type --</option>
+                                            <option value="Hợp đồng dịch vụ">Hợp đồng dịch vụ</option>
+                                            <option value="Hợp đồng thỉnh giảng">Hợp đồng thỉnh giảng</option>
+                                            <option value="Hợp đồng thử việc">Hợp đồng thử việc</option>
+                                            <option value="Hợp đồng chính thức">Hợp đồng chính thức</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label fw-bold">4. Lương hoặc Phí dịch vụ (VNĐ) <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <input type="text" id="muc_luong" class="form-control border-primary fw-bold text-end" placeholder="VD: 15,000,000">
+                                            <span class="input-group-text">VNĐ</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">2. Ngày bắt đầu / Start Date <span class="text-danger">*</span></label>
+                                        <input type="date" id="ngay_bat_dau" class="form-control border-primary">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">3. Ngày kết thúc / End Date</label>
+                                        <input type="date" id="ngay_ket_thuc" class="form-control border-primary">
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <button id="btnCreate" class="btn btn-create w-100 text-white" onclick="createContract()">
+                                    <i class="bi bi-file-earmark-pdf-fill"></i> CẬP NHẬT & TẠO FILE HỢP ĐỒNG<br>
+                                    <small class="fw-normal" style="font-size: 0.7em;">UPDATE & GENERATE CONTRACT (PDF)</small>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- QUAN TRỌNG: THAY LINK WEB APP CỦA BẠN VÀO ĐÂY ---
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx6XnYqV6pZIYcJmFUWXbXRy9cwrbew5DJ776L3MZDEyyAOpZo0mNsXuJT6WKi6iGsg3Q/exec"; 
+
+        // --- CẤU HÌNH TÀI KHOẢN ADMIN ---
+        const ADMIN_USER = "hradmin";
+        const ADMIN_PASS = "vietmy@1221";
+
+        let searchTimeout = null;
+
+        // 1. CHỨC NĂNG ĐĂNG NHẬP MỚI
+        function login() {
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+
+            if(user === ADMIN_USER && pass === ADMIN_PASS) {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+            } else {
+                alert('❌ Sai Tên đăng nhập hoặc Mật khẩu!\nWrong Username or Password!');
+            }
+        }
+
+        // ... (GIỮ NGUYÊN CÁC HÀM XỬ LÝ SEARCH VÀ CREATE CONTRACT BÊN DƯỚI) ...
+        
+        // 2. XỬ LÝ KHI GÕ TÌM KIẾM
+        function handleTyping() {
+            const keyword = document.getElementById('searchKeyword').value;
+            const suggestionBox = document.getElementById('suggestion-box');
+            if (searchTimeout) clearTimeout(searchTimeout);
+            if (keyword.length < 2) { suggestionBox.style.display = 'none'; return; }
+            searchTimeout = setTimeout(() => { fetchSuggestions(keyword); }, 500);
+        }
+
+        // 3. GỌI API TÌM KIẾM
+        function fetchSuggestions(keyword) {
+            const loading = document.getElementById('searching');
+            const suggestionBox = document.getElementById('suggestion-box');
+            loading.classList.remove('hidden');
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                redirect: "follow",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "SEARCH_CANDIDATE", keyword: keyword })
+            })
+            .then(r => r.json())
+            .then(data => {
+                loading.classList.add('hidden');
+                suggestionBox.innerHTML = ''; 
+                if(data.status === 'SUCCESS' && data.message.length > 0) {
+                    suggestionBox.style.display = 'block';
+                    data.message.forEach(user => {
+                        const item = document.createElement('div');
+                        item.className = 'suggestion-item';
+                        item.innerHTML = `<div class="s-name">${user.ho_ten}</div><div class="s-meta"><span class="s-highlight">ID: ${user.so_cccd}</span></div>`;
+                        item.onclick = () => selectCandidate(user);
+                        suggestionBox.appendChild(item);
+                    });
+                } else {
+                    suggestionBox.style.display = 'block';
+                    suggestionBox.innerHTML = '<div class="p-3 text-muted text-center">Không tìm thấy</div>';
+                }
+            })
+            .catch(e => { console.error(e); loading.classList.add('hidden'); });
+        }
+
+        // 4. CHỌN ỨNG VIÊN
+        function selectCandidate(user) {
+            document.getElementById('suggestion-box').style.display = 'none';
+            document.getElementById('searchKeyword').value = user.ho_ten; 
+            document.getElementById('contractForm').classList.remove('hidden');
+            
+            // Fill Data
+            document.getElementById('ho_ten').value = user.ho_ten;
+            document.getElementById('so_cccd').value = user.so_cccd;
+            document.getElementById('ngay_sinh').value = user.ngay_sinh;
+            document.getElementById('email').value = user.email;
+            document.getElementById('so_dien_thoai').value = user.so_dien_thoai;
+            document.getElementById('dia_chi').value = user.dia_chi;
+            document.getElementById('rowIndex').value = user.rowIndex;
+            document.getElementById('folderUrl').value = user.folderUrl;
+            
+            document.getElementById('loai_hop_dong_admin').value = user.loai_hop_dong_admin || "";
+            document.getElementById('muc_luong').value = user.muc_luong || "";
+            document.getElementById('ngay_bat_dau').value = user.ngay_bat_dau || "";
+            document.getElementById('ngay_ket_thuc').value = user.ngay_ket_thuc || "";
+        }
+
+        // 5. TẠO HỢP ĐỒNG
+        function createContract() {
+            const type = document.getElementById('loai_hop_dong_admin').value;
+            const salary = document.getElementById('muc_luong').value;
+            const start = document.getElementById('ngay_bat_dau').value;
+
+            if(!type || !salary || !start) { alert("Vui lòng điền đủ thông tin!"); return; }
+            if(!confirm("Xác nhận tạo hợp đồng?")) return;
+
+            const btn = document.getElementById('btnCreate');
+            const oldText = btn.innerHTML;
+            btn.innerHTML = 'Wait...'; btn.disabled = true;
+
+            const payload = {
+                rowIndex: document.getElementById('rowIndex').value,
+                ho_ten: document.getElementById('ho_ten').value,
+                so_cccd: document.getElementById('so_cccd').value,
+                folderUrl: document.getElementById('folderUrl').value,
+                dia_chi: document.getElementById('dia_chi').value,
+                loai_hop_dong_admin: type,
+                muc_luong: salary,
+                ngay_bat_dau: start,
+                ngay_ket_thuc: document.getElementById('ngay_ket_thuc').value
+            };
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                redirect: "follow",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "UPDATE_CONTRACT", payload: payload })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if(data.status === 'SUCCESS') { alert("✅ Thành công!"); location.reload(); }
+                else { throw new Error(data.message); }
+            })
+            .catch(e => { alert("Lỗi: " + e); btn.disabled = false; btn.innerHTML = oldText; });
+        }
+        
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-wrapper')) {
+                document.getElementById('suggestion-box').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
