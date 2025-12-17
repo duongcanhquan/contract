@@ -365,8 +365,8 @@
         <p class="text-muted small">Vui lòng không tắt trình duyệt.</p>
     </div>
 
-  <script>
-        // LINK SCRIPT CỦA BẠN
+<script>
+        // LINK APP SCRIPT CỦA BẠN (Đã kiểm tra: Chính xác)
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFD_IvoGPzdhEtbJLBqXVHTKWNuv0l4Z8NFM2AwKTTWM0VQUu8sBM7WS8l_ipwb_KqgA/exec";
 
         function checkContractType() {
@@ -399,46 +399,34 @@
                 if(key !== 'images') dataObj[key] = value;
             });
 
-            // Gửi dữ liệu với cơ chế bắt lỗi chi tiết
+            // Gửi dữ liệu Text
             fetch(SCRIPT_URL, {
                 method: "POST",
-                mode: "no-cors", // Thử chế độ no-cors nếu vẫn lỗi, nhưng thường text/plain là đủ
+                // ĐÃ SỬA: Xóa dòng 'mode: no-cors' để trình duyệt đọc được JSON trả về
                 redirect: "follow",
                 headers: {
                     "Content-Type": "text/plain;charset=utf-8"
                 },
                 body: JSON.stringify({ action: "SAVE_INFO", payload: dataObj })
             })
+            .then(response => response.json()) // Google trả về JSON, ta đọc luôn
             .then(response => {
-                // Google Apps Script redirect nên ta cần xử lý text thay vì json ngay
-                return response.text();
-            })
-            .then(text => {
-                // Cố gắng parse JSON, nếu không được nghĩa là lỗi HTML
-                try {
-                    const response = JSON.parse(text);
-                    if (response.status === 'SUCCESS') {
-                        loadingText.innerText = "Đang lưu ảnh... (Giữ nguyên tab)";
-                        uploadPhotos(response.folderId);
-                    } else {
-                        throw new Error(response.message || "Lỗi không xác định từ Server");
-                    }
-                } catch (e) {
-                    // Nếu parse lỗi, có thể do Google trả về lỗi HTML hoặc redirect
-                    // Do dùng fetch text/plain, đôi khi response rỗng hoặc redirect mờ
-                    // Ta giả định thành công nếu không có lỗi mạng nghiêm trọng ở bước này
-                    // (Đây là hạn chế của việc gọi GAS từ domain khác)
-                    console.log("Raw response:", text);
-                    
-                    // NẾU CODE BẠN CHUẨN, NÓ SẼ RA JSON. 
-                    // NẾU VÀO ĐÂY, THƯỜNG LÀ DO SCRIPT CHƯA DEPLOY BẢN MỚI
-                    alert("Lỗi dữ liệu trả về: " + text.substring(0, 100) + "... \n\nHãy kiểm tra lại bước Deploy New Version trong Apps Script!");
-                    loadingOverlay.classList.add('d-none');
+                if (response.status === 'SUCCESS') {
+                    loadingText.innerText = "Đang lưu ảnh... (Giữ nguyên tab)";
+                    // Lấy được folderId thì mới upload ảnh được
+                    uploadPhotos(response.folderId);
+                } else {
+                    throw new Error(response.message || "Lỗi không xác định từ Server");
                 }
             })
             .catch(error => {
                 console.error(error);
-                alert('Lỗi kết nối mạng: ' + error.message);
+                // Nếu lỗi cú pháp JSON (thường do Google trả về HTML lỗi)
+                if (error instanceof SyntaxError) {
+                    alert("Lỗi kết nối: Server không trả về đúng định dạng. Hãy kiểm tra lại quyền truy cập 'Anyone' trong Apps Script.");
+                } else {
+                    alert('Lỗi: ' + error.message);
+                }
                 loadingOverlay.classList.add('d-none');
             });
         }
@@ -461,6 +449,8 @@
                     const base64Data = await convertToBase64(file);
                     await fetch(SCRIPT_URL, {
                         method: "POST",
+                        // ĐÃ SỬA: Xóa no-cors ở đây nữa
+                        redirect: "follow",
                         headers: { "Content-Type": "text/plain;charset=utf-8" },
                         body: JSON.stringify({ 
                             action: "UPLOAD_FILE", 
@@ -490,6 +480,6 @@
             document.getElementById('hrForm').reset();
             window.scrollTo(0, 0);
         }
-    </script>
+</script>
 </body>
 </html>
