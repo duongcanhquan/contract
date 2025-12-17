@@ -1,487 +1,489 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <base target="_top">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>THÔNG TIN NHÂN SỰ / HR PROFILE - APCHN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HỆ THỐNG NỘP HỒ SƠ NHÂN SỰ - APCHN</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
+
     <style>
-        :root {
-            --primary-color: #0056b3; 
-            --bg-color: #f0f2f5;
-            --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-        }
-
-        body { 
-            background-color: var(--bg-color); 
-            font-family: 'Roboto', sans-serif; 
-            color: #333;
-            padding-bottom: 40px;
-        }
-
+        :root { --primary-color: #0056b3; --secondary-color: #f0f2f5; }
+        body { background-color: var(--secondary-color); font-family: 'Roboto', sans-serif; padding-bottom: 40px; }
+        
         .main-container {
-            max-width: 960px;
-            margin: 20px auto;
+            max-width: 900px;
+            margin: 30px auto;
             background: white;
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
-        /* Header Logo Section */
         .header-banner {
             background: white;
             padding: 30px 20px;
             text-align: center;
-            border-bottom: 3px solid var(--primary-color);
+            border-bottom: 4px solid var(--primary-color);
         }
 
-        .logo-img {
-            max-width: 300px;
-            height: auto;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
+        .logo-img { max-height: 80px; margin-bottom: 15px; }
+        .page-title { color: #d32f2f; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
+        .page-subtitle { color: #555; font-size: 0.95rem; margin-top: 5px; }
 
-        .form-title {
-            color: #b71c1c;
+        /* Section Styling */
+        .form-section { padding: 30px; border-bottom: 1px solid #eee; }
+        .section-title {
+            color: var(--primary-color);
             font-weight: 700;
-            font-size: 1.6rem;
             text-transform: uppercase;
-            margin-bottom: 0;
-            margin-top: 10px;
-        }
-
-        /* Form Styling */
-        .form-padding {
-            padding: 30px;
-        }
-
-        .section-header {
-            background-color: #e3f2fd;
-            color: #0d47a1;
-            padding: 12px 15px;
-            border-radius: 8px;
-            font-weight: 700;
-            margin-top: 25px;
             margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px;
             font-size: 1.1rem;
-            border-left: 5px solid #0d47a1;
         }
+        .section-title i { font-size: 1.3rem; }
 
-        .form-label {
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: #495057;
-            margin-bottom: 5px;
-        }
-
+        .form-label { font-weight: 500; color: #333; font-size: 0.95rem; }
         .form-control, .form-select {
+            padding: 10px 15px;
             border-radius: 8px;
-            padding: 10px 12px;
             border: 1px solid #ced4da;
             transition: all 0.3s;
         }
-
         .form-control:focus, .form-select:focus {
-            box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.25);
-            border-color: #0d47a1;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
         }
 
-        /* Nút Gửi */
-        .btn-submit-wrapper {
-            margin-top: 40px;
-            margin-bottom: 20px;
-        }
-
+        /* Button */
         .btn-submit {
-            background: linear-gradient(45deg, #0d47a1, #1976d2);
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 50px;
-            width: 100%;
-            box-shadow: 0 4px 15px rgba(13, 71, 161, 0.4);
-            transition: transform 0.2s;
+            background: linear-gradient(45deg, #0056b3, #004494);
             color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 15px 40px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 86, 179, 0.3);
+            transition: all 0.3s;
+            width: 100%;
         }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 86, 179, 0.5); }
+        .btn-submit:disabled { background: #ccc; transform: none; box-shadow: none; cursor: not-allowed; }
 
-        .btn-submit:active {
-            transform: scale(0.98);
-        }
-
-        /* Mobile Optimization */
-        @media (max-width: 576px) {
-            .main-container {
-                margin: 0;
-                border-radius: 0;
-                box-shadow: none;
-            }
-            .form-padding {
-                padding: 20px 15px;
-            }
-            .logo-img {
-                max-width: 200px;
-            }
-            .form-title {
-                font-size: 1.3rem;
-            }
-        }
-        
-        .loading-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.95);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+        /* Footer Link */
+        .admin-link a { color: #999; font-size: 0.8rem; text-decoration: none; transition: 0.3s; }
+        .admin-link a:hover { color: var(--primary-color); text-decoration: underline; }
     </style>
 </head>
 <body>
 
     <div class="main-container">
         <div class="header-banner">
-            <img src="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp" alt="Logo Viet My" class="logo-img">
-            <h1 class="form-title">THÔNG TIN NHÂN SỰ / HR PROFILE</h1>
-            <p class="text-muted mt-2 mb-0">Hệ thống quản lý hồ sơ tập trung / Centralized Profile Management System</p>
+            <img src="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp" alt="Logo" class="logo-img">
+            <h2 class="page-title">Phiếu Thông Tin Nhân Sự</h2>
+            <p class="page-subtitle">Candidate Information Form</p>
         </div>
 
-        <div class="form-padding">
-            <form id="hrForm" autocomplete="off">
-                
-                <div class="section-header">1. Thông tin cá nhân / Personal Info</div>
+        <form id="hrForm" onsubmit="submitForm(event)">
+            
+            <div class="form-section">
+                <div class="section-title"><i class="bi bi-person-lines-fill"></i> 1. Thông tin cá nhân / Personal Information</div>
                 <div class="row g-3">
-                    <div class="col-12 col-md-6">
+                    <div class="col-md-6">
                         <label class="form-label">Họ và tên / Full Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="ho_ten" placeholder="NHẬP CHỮ IN HOA / UPPERCASE..." required style="text-transform: uppercase;">
+                        <input type="text" id="ho_ten" class="form-control" required style="text-transform: uppercase;" placeholder="NGUYEN VAN A">
                     </div>
-                    <div class="col-6 col-md-3">
+                    <div class="col-md-3">
                         <label class="form-label">Giới tính / Gender <span class="text-danger">*</span></label>
-                        <select class="form-select" name="gioi_tinh" required>
-                            <option value="">--Chọn/Select--</option>
+                        <select id="gioi_tinh" class="form-select" required>
+                            <option value="">-- Chọn --</option>
                             <option value="Nam">Nam / Male</option>
                             <option value="Nữ">Nữ / Female</option>
                         </select>
                     </div>
-                    <div class="col-6 col-md-3">
+                    <div class="col-md-3">
                         <label class="form-label">Quốc tịch / Nationality</label>
-                        <input type="text" class="form-control" name="quoc_tich" value="Việt Nam">
+                        <input type="text" id="quoc_tich" class="form-control" value="Việt Nam">
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label">Ngày sinh / DOB <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" name="ngay_sinh" required>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Ngày sinh / Date of Birth <span class="text-danger">*</span></label>
+                        <input type="date" id="ngay_sinh" class="form-control" required>
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label">Nơi sinh / Place of Birth</label>
-                        <input type="text" class="form-control" name="noi_sinh">
+                    <div class="col-md-6">
+                        <label class="form-label">Nơi sinh / Place of Birth <span class="text-danger">*</span></label>
+                        <input type="text" id="noi_sinh" class="form-control" required placeholder="Tỉnh/Thành phố...">
                     </div>
-                    <div class="col-12 col-md-6">
+
+                    <div class="col-md-6">
                         <label class="form-label">Số điện thoại / Phone <span class="text-danger">*</span></label>
-                        <input type="tel" class="form-control" name="so_dien_thoai" required>
+                        <input type="tel" id="so_dien_thoai" class="form-control" required placeholder="09xxxxxxx">
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label">Email cá nhân / Personal Email <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" name="email" required>
+                    <div class="col-md-6">
+                        <label class="form-label">Email cá nhân / Email <span class="text-danger">*</span></label>
+                        <input type="email" id="email" class="form-control" required placeholder="example@gmail.com">
                     </div>
-                    <div class="col-12 col-md-6">
+
+                    <div class="col-md-6">
                         <label class="form-label">Tình trạng hôn nhân / Marital Status</label>
-                        <select class="form-select" name="hon_nhan">
+                        <select id="hon_nhan" class="form-select">
                             <option value="Độc thân">Độc thân / Single</option>
                             <option value="Đã kết hôn">Đã kết hôn / Married</option>
                             <option value="Ly hôn">Ly hôn / Divorced</option>
                         </select>
                     </div>
+
                     <div class="col-12">
-                        <label class="form-label">Địa chỉ thường trú / Permanent Address</label>
-                        <input type="text" class="form-control" name="dia_chi_thuong_tru">
+                        <label class="form-label">Địa chỉ thường trú / Permanent Address <span class="text-danger">*</span></label>
+                        <input type="text" id="dia_chi_thuong_tru" class="form-control" required placeholder="Theo sổ hộ khẩu / As per ID card">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Nơi ở hiện tại / Current Address</label>
-                        <input type="text" class="form-control" name="noi_o_hien_tai">
+                        <label class="form-label">Nơi ở hiện tại / Current Address <span class="text-danger">*</span></label>
+                        <input type="text" id="noi_o_hien_tai" class="form-control" required>
                     </div>
                 </div>
+            </div>
 
-                <div class="section-header">2. Giấy tờ tùy thân / ID Card</div>
+            <div class="form-section bg-light">
+                <div class="section-title"><i class="bi bi-card-heading"></i> 2. Giấy tờ tùy thân / Identity</div>
                 <div class="row g-3">
-                    <div class="col-12 col-md-4">
+                    <div class="col-md-4">
                         <label class="form-label">Số CCCD / ID Number <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="so_cccd" required>
+                        <input type="text" id="so_cccd" class="form-control fw-bold" required>
                     </div>
-                    <div class="col-6 col-md-4">
-                        <label class="form-label">Ngày Cấp / Date of Issue</label>
-                        <input type="date" class="form-control" name="ngay_cap_cccd">
+                    <div class="col-md-4">
+                        <label class="form-label">Ngày cấp / Date of Issue <span class="text-danger">*</span></label>
+                        <input type="date" id="ngay_cap_cccd" class="form-control" required>
                     </div>
-                    <div class="col-6 col-md-4">
-                        <label class="form-label">Nơi cấp / Place of Issue</label>
-                        <input type="text" class="form-control" name="noi_cap_cccd">
+                    <div class="col-md-4">
+                        <label class="form-label">Nơi cấp / Place of Issue <span class="text-danger">*</span></label>
+                        <input type="text" id="noi_cap_cccd" class="form-control" required placeholder="Cục CS QLHC...">
                     </div>
                 </div>
+            </div>
 
-                <div class="section-header">3. Trình độ học vấn / Education</div>
+            <div class="form-section">
+                <div class="section-title"><i class="bi bi-mortarboard"></i> 3. Trình độ học vấn / Education</div>
                 <div class="row g-3">
-                    <div class="col-12 col-md-4">
-                        <label class="form-label">Trình độ cao nhất / Highest Degree</label>
-                        <select class="form-select" name="trinh_do">
+                    <div class="col-md-6">
+                        <label class="form-label">Trình độ cao nhất / Highest Degree <span class="text-danger">*</span></label>
+                        <select id="trinh_do" class="form-select" required>
+                            <option value="">-- Chọn / Select --</option>
+                            <option value="Tiến sĩ">Tiến sĩ / PhD</option>
+                            <option value="Thạc sĩ">Thạc sĩ / Master</option>
                             <option value="Đại học">Đại học / Bachelor</option>
                             <option value="Cao đẳng">Cao đẳng / College</option>
-                            <option value="Thạc Sỹ">Thạc Sỹ / Master</option>
-                            <option value="Tiến Sỹ">Tiến Sỹ / PhD</option>
+                            <option value="Trung cấp">Trung cấp / Intermediate</option>
+                            <option value="THPT">THPT / High School</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Chuyên ngành / Major</label>
+                        <input type="text" id="chuyen_nganh" class="form-control">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Nơi đào tạo / School or University</label>
+                        <input type="text" id="truong_dao_tao" class="form-control">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Chứng chỉ khác / Other Certificates</label>
+                        <input type="text" id="bang_cap_khac" class="form-control" placeholder="IELTS, TOEIC, CPA...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section bg-light">
+                <div class="section-title"><i class="bi bi-bank"></i> 4. Tài chính & Thuế / Finance & Tax</div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Ngân hàng / Bank Name <span class="text-danger">*</span></label>
+                        <input type="text" id="chi_nhanh_ngan_hang" class="form-control" required placeholder="Vietcombank, Techcombank...">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Số tài khoản / Account No <span class="text-danger">*</span></label>
+                        <input type="text" id="so_tk_ngan_hang" class="form-control fw-bold" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Tên chủ tài khoản / Account Name <span class="text-danger">*</span></label>
+                        <input type="text" id="ten_tk_ngan_hang" class="form-control" required style="text-transform: uppercase;">
+                        <div class="form-text">Phải trùng với tên người nộp hồ sơ / Must match applicant's name.</div>
+                    </div>
+                    
+                    <hr class="my-3">
+                    
+                    <div class="col-md-4">
+                        <label class="form-label">Mã số thuế / Tax Code <span class="text-danger">*</span></label>
+                        <input type="text" id="mst_ca_nhan" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Ngày cấp MST / Tax Date</label>
+                        <input type="date" id="ngay_cap_mst" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Nơi cấp MST / Tax Place</label>
+                        <input type="text" id="noi_cap_mst" class="form-control">
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label class="form-label">Số sổ BHXH / Social Insurance No</label>
+                        <input type="text" id="so_bhxh" class="form-control" placeholder="Nếu có / If any">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title"><i class="bi bi-people"></i> 5. Gia đình / Family (Children)</div>
+                <p class="text-muted small">Thông tin con cái (Họ tên - Năm sinh) / Children info (Name - YOB)</p>
+                <div class="row g-3">
+                    <div class="col-12"><input type="text" id="con_1" class="form-control" placeholder="Con thứ 1 / Child 1"></div>
+                    <div class="col-12"><input type="text" id="con_2" class="form-control" placeholder="Con thứ 2 / Child 2"></div>
+                    <div class="col-12"><input type="text" id="con_3" class="form-control" placeholder="Con thứ 3 / Child 3"></div>
+                </div>
+
+                <div class="mt-4">
+                    <label class="form-label fw-bold">Người phụ thuộc (Giảm trừ gia cảnh) / Dependents</label>
+                    <div class="p-3 bg-light rounded border mb-2">
+                        <label class="small fw-bold">Người 1:</label>
+                        <div class="row g-2">
+                            <div class="col-md-4"><input type="text" id="npt_1_ten" class="form-control form-control-sm" placeholder="Họ tên / Name"></div>
+                            <div class="col-md-4"><input type="text" id="npt_1_mst" class="form-control form-control-sm" placeholder="Mã số thuế / Tax Code"></div>
+                            <div class="col-md-4"><input type="text" id="npt_1_qh" class="form-control form-control-sm" placeholder="Quan hệ / Relation"></div>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-light rounded border">
+                        <label class="small fw-bold">Người 2:</label>
+                        <div class="row g-2">
+                            <div class="col-md-4"><input type="text" id="npt_2_ten" class="form-control form-control-sm" placeholder="Họ tên / Name"></div>
+                            <div class="col-md-4"><input type="text" id="npt_2_mst" class="form-control form-control-sm" placeholder="Mã số thuế / Tax Code"></div>
+                            <div class="col-md-4"><input type="text" id="npt_2_qh" class="form-control form-control-sm" placeholder="Quan hệ / Relation"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section bg-light">
+                <div class="section-title"><i class="bi bi-telephone-plus"></i> 6. Liên hệ khẩn cấp / Emergency Contact</div>
+                <div class="col-12">
+                    <label class="form-label">Họ tên - Quan hệ - SĐT <span class="text-danger">*</span></label>
+                    <input type="text" id="lien_he_khan_cap" class="form-control" required placeholder="VD: Nguyen Van B - Bố - 0987...">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title"><i class="bi bi-briefcase"></i> 7. Thông tin công việc / Job Info</div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Loại hợp đồng / Contract Type <span class="text-danger">*</span></label>
+                        <select id="loai_hop_dong" class="form-select" required>
+                            <option value="">-- Chọn / Select --</option>
+                            <option value="Hợp đồng dịch vụ">Hợp đồng dịch vụ / Service</option>
+                            <option value="Hợp đồng thỉnh giảng">Hợp đồng thỉnh giảng / Visiting</option>
+                            <option value="Hợp đồng thử việc">Hợp đồng thử việc / Probation</option>
+                            <option value="Hợp đồng chính thức">Hợp đồng chính thức / Official</option>
                             <option value="Khác">Khác / Other</option>
                         </select>
                     </div>
-                    <div class="col-12 col-md-4">
-                        <label class="form-label">Chuyên ngành / Major</label>
-                        <input type="text" class="form-control" name="chuyen_nganh">
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <label class="form-label">Trường đào tạo / University</label>
-                        <input type="text" class="form-control" name="truong_dao_tao">
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label">Bằng cấp khác (nếu có) / Other Certificates</label>
-                        <input type="text" class="form-control" name="bang_cap_khac">
-                    </div>
-                </div>
-
-                <div class="section-header">4. Tài chính & Pháp lý / Finance & Legal</div>
-                <div class="row g-3">
-                    <div class="col-12 col-md-4">
-                        <label class="form-label">Tên chủ tài khoản / Account Holder</label>
-                        <input type="text" class="form-control" name="ten_tk_ngan_hang" style="text-transform: uppercase;">
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <label class="form-label">Số tài khoản / Account Number</label>
-                        <input type="text" class="form-control" name="so_tk_ngan_hang">
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <label class="form-label">Ngân hàng - Chi nhánh / Bank - Branch</label>
-                        <input type="text" class="form-control" name="chi_nhanh_ngan_hang" placeholder="VD: VCB - CN Ba Đình">
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <label class="form-label">Mã số thuế cá nhân / Tax Code</label>
-                        <input type="text" class="form-control" name="mst_ca_nhan">
-                    </div>
-                    <div class="col-6 col-md-4">
-                        <label class="form-label">Nơi cấp MST / Tax Place</label>
-                        <input type="text" class="form-control" name="noi_cap_mst">
-                    </div>
-                    <div class="col-6 col-md-4">
-                        <label class="form-label">Ngày cấp MST / Tax Date</label>
-                        <input type="date" class="form-control" name="ngay_cap_mst">
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label">Số sổ BHXH (Nếu có) / Social Insurance No</label>
-                        <input type="text" class="form-control" name="so_bhxh" placeholder="Giảng viên thỉnh giảng bỏ qua / Visiting Lecturers skip this">
+                    <div class="col-md-6">
+                        <label class="form-label">Phòng ban / Department <span class="text-danger">*</span></label>
+                        <select id="phong_ban" class="form-select" required>
+                            <option value="">-- Chọn / Select --</option>
+                            <option value="Đào tạo">Phòng Đào tạo / Training Dept</option>
+                            <option value="Hành chính - Nhân sự">HC-NS / HR-Admin</option>
+                            <option value="Kế toán">Kế toán / Accounting</option>
+                            <option value="Tuyển sinh">Tuyển sinh / Admission</option>
+                            <option value="Công tác HSSV">CT HSSV / Student Affairs</option>
+                            <option value="Khác">Khác / Other</option>
+                        </select>
                     </div>
                 </div>
+            </div>
 
-                <div class="section-header">5. Gia đình / Family</div>
-                <div class="mb-3">
-                    <label class="form-label text-primary fw-bold">Thông tin con (Họ tên - Ngày sinh) / Children Info</label>
-                    <div class="row g-2">
-                        <div class="col-12"><input type="text" class="form-control" name="con_1" placeholder="Con/Child 1 (Name - DOB)"></div>
-                        <div class="col-12"><input type="text" class="form-control" name="con_2" placeholder="Con/Child 2 (Name - DOB)"></div>
-                        <div class="col-12"><input type="text" class="form-control" name="con_3" placeholder="Con/Child 3 (Name - DOB)"></div>
-                    </div>
+            <div class="form-section bg-light">
+                <div class="section-title"><i class="bi bi-cloud-upload"></i> 8. Tải lên hồ sơ / Upload Documents</div>
+                <div class="alert alert-info small">
+                    <i class="bi bi-info-circle"></i> Vui lòng tải lên ảnh chụp <strong>CCCD (2 mặt)</strong> và các bằng cấp liên quan.<br>
+                    Please upload photos of <strong>ID Card (both sides)</strong> and degrees.
                 </div>
                 
                 <div class="mb-3">
-                     <label class="form-label text-primary fw-bold">Người phụ thuộc (Giảm trừ gia cảnh) / Dependents</label>
-                     <div class="card p-2 bg-light mb-2">
-                        <div class="row g-2">
-                            <div class="col-12"><input type="text" class="form-control form-control-sm" name="npt_1_ten" placeholder="Họ tên NPT 1 / Name 1"></div>
-                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_1_mst" placeholder="MST / Tax Code"></div>
-                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_1_qh" placeholder="Quan hệ / Relation"></div>
-                        </div>
-                     </div>
-                     <div class="card p-2 bg-light">
-                        <div class="row g-2">
-                            <div class="col-12"><input type="text" class="form-control form-control-sm" name="npt_2_ten" placeholder="Họ tên NPT 2 / Name 2"></div>
-                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_2_mst" placeholder="MST / Tax Code"></div>
-                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_2_qh" placeholder="Quan hệ / Relation"></div>
-                        </div>
-                     </div>
+                    <label class="form-label fw-bold">Ảnh CCCD 2 mặt và hồ sơ (Tối đa 5 ảnh / Max 5) <span class="text-danger">*</span></label>
+                    <input type="file" id="fileInput" class="form-control" multiple accept="image/*,application/pdf" required>
+                    <div id="fileList" class="mt-2 text-muted small fst-italic"></div>
                 </div>
+            </div>
 
-                <div class="col-12">
-                    <label class="form-label text-danger fw-bold">Liên hệ khẩn cấp / Emergency Contact <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="lien_he_khan_cap" placeholder="Tên - SĐT - Mối quan hệ / Name - Phone - Relation" required>
-                </div>
+            <div class="p-4">
+                <button type="submit" id="btnSubmit" class="btn-submit">
+                    <i class="bi bi-send-fill"></i> GỬI HỒ SƠ / SUBMIT
+                </button>
+            </div>
 
-                <div class="section-header">6. Công việc & Hồ sơ / Job & Docs</div>
-                <div class="row g-3">
-                    <div class="col-12 col-md-6">
-                        <label class="form-label">Loại hợp đồng / Contract Type</label>
-                        <select class="form-select" name="loai_hop_dong" id="contractType" onchange="checkContractType()">
-                            <option value="Hợp đồng thỉnh giảng">Hợp đồng thỉnh giảng / Visiting Contract</option>
-                            <option value="Hợp đồng dịch vụ">Hợp đồng dịch vụ / Servives Contract</option>
-                            <option value="Khác">Khác / Other</option>
-                        </select>
-                        <input type="text" class="form-control mt-2 d-none" name="loai_hop_dong_khac" id="otherContract" placeholder="Nhập loại hợp đồng / Type here...">
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label">Phòng ban / Department</label>
-                        <select class="form-select" name="phong_ban">
-                            <option value="Phòng NSVH">Phòng NSVH / HR & Admin</option>
-                            <option value="Phòng MKT">Phòng MKT / Marketing</option>
-                            <option value="Phòng Kinh doanh">Phòng Kinh doanh / Sales</option>
-                            <option value="Phòng Đào tạo">Phòng Đào tạo / Training</option>
-                            <option value="Ban Lãnh Đạo">Ban Lãnh Đạo / Board of Management</option>
-                            <option value="Phòng Tuyển sinh">Phòng Tuyển sinh / Admissions</option>
-                            <option value="Phòng Kế toán">Phòng Kế toán / Accounting</option>
-                            <option value="Thư ký khoa">Thư ký khoa / Faculty Secretary</option>
-                            <option value="Khoa CH">Khoa CH / CH Faculty</option>
-                            <option value="Khoa BCH">Khoa BCH / BCH Faculty</option>
-                        </select>
-                    </div>
-                    
-                    <div class="col-12 mt-4">
-                        <div class="p-3 border border-primary border-2 border-dashed rounded text-center bg-white">
-                            <label class="form-label fw-bold mb-2 text-primary">Ảnh hồ sơ cá nhân / Photos (Tối đa 5 ảnh / Max 5) <span class="text-danger">*</span></label>
-                            <input type="file" class="form-control" id="fileInput" multiple accept="image/*" required>
-                            <small class="text-muted d-block mt-2">Hệ thống sẽ tự tạo thư mục mang tên bạn / System will auto-create a folder with your name.</small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="btn-submit-wrapper">
-                    <button type="button" class="btn btn-primary btn-submit" id="btnSubmit" onclick="submitForm()">GỬI HỒ SƠ / SUBMIT PROFILE</button>
-                </div>
-
-            </form>
+        </form>
+        
+        <div class="text-center pb-4 admin-link">
+            <a href="./admin.html"><i class="bi bi-shield-lock"></i> Admin Portal</a>
         </div>
     </div>
 
-    <div id="loadingOverlay" class="loading-overlay d-none">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
-        <h5 class="mt-3 text-primary" id="loadingText">Đang xử lý dữ liệu...</h5>
-        <p class="text-muted small">Vui lòng không tắt trình duyệt / Please do not close browser.</p>
-    </div>
-<div class="text-center mt-4 mb-5">
-        <small class="text-muted" style="font-size: 0.75rem; opacity: 0.6;">
-            &copy; 2025 APCHN HR System. All rights reserved. <br>
-            <a href="./admin.html" class="text-decoration-none text-secondary hover-primary">
-                <i class="bi bi-shield-lock"></i> Quản trị viên (Admin Portal)
-            </a>
-        </small>
-</div>
     <script>
-        // LINK APP SCRIPT CỦA BẠN (Đã kiểm tra: Chính xác)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbym9Y3niXjJkRbOcMfMl1EIKeoWh3LjJKf1Cg7ErO9sfoRHREtwGFKFE6A8t8EWacmf3g/exec";
+        // ============================================================
+        // HÃY DÁN LINK WEB APP CỦA BẠN VÀO DÒNG DƯỚI ĐÂY
+        // ============================================================
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyA73EoCX_FE9H8LbEoe3WDfUqQEuMGmGTtPE18O3bNAYADyhLGMktW1YaKKCWmIgWU8g/exec"; 
+        // ============================================================
 
-        function checkContractType() {
-            const select = document.getElementById('contractType');
-            const otherInput = document.getElementById('otherContract');
-            if (select.value === 'Khác') {
-                otherInput.classList.remove('d-none');
-                otherInput.required = true;
-            } else {
-                otherInput.classList.add('d-none');
-                otherInput.required = false;
-            }
-        }
+        const fileInput = document.getElementById('fileInput');
+        const fileListDisplay = document.getElementById('fileList');
+        let selectedFiles = [];
 
-        function submitForm() {
-            const form = document.getElementById('hrForm');
-            if (!form.checkValidity()) {
-                form.reportValidity();
+        // Xử lý hiển thị tên file khi chọn
+        fileInput.addEventListener('change', () => {
+            fileListDisplay.innerHTML = '';
+            selectedFiles = Array.from(fileInput.files);
+            
+            if (selectedFiles.length > 5) {
+                alert("Bạn chỉ được chọn tối đa 5 file! / Max 5 files only!");
+                fileInput.value = ''; 
+                selectedFiles = [];
                 return;
             }
 
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            const loadingText = document.getElementById('loadingText');
-            loadingOverlay.classList.remove('d-none');
-            loadingText.innerText = "Đang kết nối Server... (Connecting...)";
-
-            const formData = new FormData(form);
-            const dataObj = {};
-            formData.forEach((value, key) => {
-                if(key !== 'images') dataObj[key] = value;
+            selectedFiles.forEach(file => {
+                fileListDisplay.innerHTML += `<div><i class="bi bi-check-circle-fill text-success"></i> ${file.name}</div>`;
             });
+        });
 
-            // Gửi dữ liệu Text
+        function submitForm(e) {
+            e.preventDefault();
+            
+            if(!confirm("Xác nhận gửi thông tin? / Confirm submit?")) return;
+
+            const btn = document.getElementById('btnSubmit');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Đang xử lý / Processing...';
+            btn.disabled = true;
+
+            // 1. Thu thập dữ liệu Form
+            const formData = {
+                ho_ten: document.getElementById('ho_ten').value,
+                gioi_tinh: document.getElementById('gioi_tinh').value,
+                quoc_tich: document.getElementById('quoc_tich').value,
+                ngay_sinh: document.getElementById('ngay_sinh').value,
+                noi_sinh: document.getElementById('noi_sinh').value,
+                so_dien_thoai: document.getElementById('so_dien_thoai').value,
+                email: document.getElementById('email').value,
+                hon_nhan: document.getElementById('hon_nhan').value,
+                dia_chi_thuong_tru: document.getElementById('dia_chi_thuong_tru').value,
+                noi_o_hien_tai: document.getElementById('noi_o_hien_tai').value,
+                
+                so_cccd: document.getElementById('so_cccd').value,
+                ngay_cap_cccd: document.getElementById('ngay_cap_cccd').value,
+                noi_cap_cccd: document.getElementById('noi_cap_cccd').value,
+                
+                trinh_do: document.getElementById('trinh_do').value,
+                chuyen_nganh: document.getElementById('chuyen_nganh').value,
+                truong_dao_tao: document.getElementById('truong_dao_tao').value,
+                bang_cap_khac: document.getElementById('bang_cap_khac').value,
+                
+                ten_tk_ngan_hang: document.getElementById('ten_tk_ngan_hang').value,
+                so_tk_ngan_hang: document.getElementById('so_tk_ngan_hang').value,
+                chi_nhanh_ngan_hang: document.getElementById('chi_nhanh_ngan_hang').value,
+                mst_ca_nhan: document.getElementById('mst_ca_nhan').value,
+                ngay_cap_mst: document.getElementById('ngay_cap_mst').value,
+                noi_cap_mst: document.getElementById('noi_cap_mst').value,
+                so_bhxh: document.getElementById('so_bhxh').value,
+                
+                con_1: document.getElementById('con_1').value,
+                con_2: document.getElementById('con_2').value,
+                con_3: document.getElementById('con_3').value,
+                
+                npt_1_ten: document.getElementById('npt_1_ten').value,
+                npt_1_mst: document.getElementById('npt_1_mst').value,
+                npt_1_qh: document.getElementById('npt_1_qh').value,
+                npt_2_ten: document.getElementById('npt_2_ten').value,
+                npt_2_mst: document.getElementById('npt_2_mst').value,
+                npt_2_qh: document.getElementById('npt_2_qh').value,
+                
+                lien_he_khan_cap: document.getElementById('lien_he_khan_cap').value,
+                loai_hop_dong: document.getElementById('loai_hop_dong').value,
+                phong_ban: document.getElementById('phong_ban').value
+            };
+
+            // 2. Gửi thông tin (SAVE_INFO)
             fetch(SCRIPT_URL, {
                 method: "POST",
                 redirect: "follow",
-                headers: {
-                    "Content-Type": "text/plain;charset=utf-8"
-                },
-                body: JSON.stringify({ action: "SAVE_INFO", payload: dataObj })
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "SAVE_INFO", payload: formData })
             })
-            .then(response => response.json()) 
+            .then(res => res.json())
             .then(response => {
                 if (response.status === 'SUCCESS') {
-                    loadingText.innerText = "Đang lưu ảnh... (Uploading photos...)";
-                    uploadPhotos(response.folderId);
+                    const folderId = response.message.folderId; // Lấy ID folder vừa tạo
+                    
+                    // 3. Nếu có file thì Upload tiếp
+                    if (selectedFiles.length > 0) {
+                        uploadFilesSequentially(selectedFiles, folderId, () => {
+                            alert("✅ GỬI HỒ SƠ THÀNH CÔNG! \nSuccessfully Submitted!");
+                            document.getElementById('hrForm').reset();
+                            fileListDisplay.innerHTML = '';
+                            btn.disabled = false;
+                            btn.innerHTML = originalText;
+                        });
+                    } else {
+                        alert("✅ GỬI THÀNH CÔNG (Không có file)!");
+                        document.getElementById('hrForm').reset();
+                        btn.disabled = false;
+                        btn.innerHTML = originalText;
+                    }
                 } else {
-                    throw new Error(response.message || "Unknown Error");
+                    throw new Error(response.message);
                 }
             })
             .catch(error => {
-                console.error(error);
-                if (error instanceof SyntaxError) {
-                    alert("Lỗi kết nối / Connection Error. Check permissions.");
-                } else {
-                    alert('Lỗi: ' + error.message);
-                }
-                loadingOverlay.classList.add('d-none');
+                alert("LỖI / ERROR: " + error);
+                btn.disabled = false;
+                btn.innerHTML = originalText;
             });
         }
 
-        async function uploadPhotos(folderId) {
-            const fileInput = document.getElementById('fileInput');
-            const files = fileInput.files;
-            const loadingText = document.getElementById('loadingText');
-
-            if (files.length === 0) {
-                finishSubmission();
-                return;
-            }
-
+        // Hàm upload file tuần tự
+        async function uploadFilesSequentially(files, folderId, onComplete) {
             let uploadedCount = 0;
+            const btn = document.getElementById('btnSubmit');
+            
             for (let i = 0; i < files.length; i++) {
+                btn.innerHTML = `Uploading file ${i+1}/${files.length}...`;
                 const file = files[i];
-                loadingText.innerText = `Uploading image ${i + 1}/${files.length}...`;
-                try {
-                    const base64Data = await convertToBase64(file);
-                    await fetch(SCRIPT_URL, {
-                        method: "POST",
-                        redirect: "follow",
-                        headers: { "Content-Type": "text/plain;charset=utf-8" },
-                        body: JSON.stringify({ 
-                            action: "UPLOAD_FILE", 
-                            payload: { folderId: folderId, fileName: file.name, dataStr: base64Data }
-                        })
-                    });
-                    uploadedCount++;
-                } catch (err) {
-                    console.error("Upload error: ", file.name, err);
-                }
-            }
-            finishSubmission();
-        }
-
-        function convertToBase64(file) {
-            return new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-        }
-
-        function finishSubmission() {
-            document.getElementById('loadingOverlay').classList.add('d-none');
-            alert("✅ XONG! Hồ sơ đã được gửi thành công / Submission Successful.");
-            document.getElementById('hrForm').reset();
-            window.scrollTo(0, 0);
+                
+                await new Promise((resolve, reject) => {
+                    reader.onload = function(e) {
+                        const base64Data = e.target.result; // Data URL
+                        
+                        fetch(SCRIPT_URL, {
+                            method: "POST",
+                            redirect: "follow",
+                            headers: { "Content-Type": "text/plain;charset=utf-8" },
+                            body: JSON.stringify({
+                                action: "UPLOAD_FILE",
+                                payload: {
+                                    folderId: folderId,
+                                    fileName: file.name,
+                                    dataStr: base64Data
+                                }
+                            })
+                        })
+                        .then(() => resolve())
+                        .catch(err => reject(err));
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+            onComplete();
         }
     </script>
 </body>
