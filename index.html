@@ -4,7 +4,7 @@
     <base target="_top">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>THÔNG TIN NHÂN SỰ - APCHN (v2.0)</title>
+    <title>THÔNG TIN NHÂN SỰ / HR PROFILE - APCHN</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
@@ -149,8 +149,8 @@
     <div class="main-container">
         <div class="header-banner">
             <img src="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp" alt="Logo Viet My" class="logo-img">
-            <h1 class="form-title">THÔNG TIN NHÂN SỰ / HR PROFILE v2.0</h1>
-            <p class="text-muted mt-2 mb-0">Hệ thống quản lý hồ sơ tập trung</p>
+            <h1 class="form-title">THÔNG TIN NHÂN SỰ / HR PROFILE</h1>
+            <p class="text-muted mt-2 mb-0">Hệ thống quản lý hồ sơ tập trung / Centralized Profile Management System</p>
         </div>
 
         <div class="form-padding">
@@ -160,18 +160,18 @@
                 <div class="row g-3">
                     <div class="col-12 col-md-6">
                         <label class="form-label">Họ và tên / Full Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="ho_ten" placeholder="Nhập chữ in hoa..." required style="text-transform: uppercase;">
+                        <input type="text" class="form-control" name="ho_ten" placeholder="NHẬP CHỮ IN HOA / UPPERCASE..." required style="text-transform: uppercase;">
                     </div>
                     <div class="col-6 col-md-3">
                         <label class="form-label">Giới tính / Gender <span class="text-danger">*</span></label>
                         <select class="form-select" name="gioi_tinh" required>
-                            <option value="">--Chọn--</option>
+                            <option value="">--Chọn/Select--</option>
                             <option value="Nam">Nam / Male</option>
                             <option value="Nữ">Nữ / Female</option>
                         </select>
                     </div>
                     <div class="col-6 col-md-3">
-                        <label class="form-label">Quốc tịch</label>
+                        <label class="form-label">Quốc tịch / Nationality</label>
                         <input type="text" class="form-control" name="quoc_tich" value="Việt Nam">
                     </div>
                     <div class="col-12 col-md-6">
@@ -187,11 +187,11 @@
                         <input type="tel" class="form-control" name="so_dien_thoai" required>
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label">Email cá nhân <span class="text-danger">*</span></label>
+                        <label class="form-label">Email cá nhân / Personal Email <span class="text-danger">*</span></label>
                         <input type="email" class="form-control" name="email" required>
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label">Tình trạng hôn nhân</label>
+                        <label class="form-label">Tình trạng hôn nhân / Marital Status</label>
                         <select class="form-select" name="hon_nhan">
                             <option value="Độc thân">Độc thân / Single</option>
                             <option value="Đã kết hôn">Đã kết hôn / Married</option>
@@ -215,11 +215,11 @@
                         <input type="text" class="form-control" name="so_cccd" required>
                     </div>
                     <div class="col-6 col-md-4">
-                        <label class="form-label">Ngày Cấp</label>
+                        <label class="form-label">Ngày Cấp / Date of Issue</label>
                         <input type="date" class="form-control" name="ngay_cap_cccd">
                     </div>
                     <div class="col-6 col-md-4">
-                        <label class="form-label">Nơi cấp</label>
+                        <label class="form-label">Nơi cấp / Place of Issue</label>
                         <input type="text" class="form-control" name="noi_cap_cccd">
                     </div>
                 </div>
@@ -227,25 +227,25 @@
                 <div class="section-header">3. Trình độ học vấn / Education</div>
                 <div class="row g-3">
                     <div class="col-12 col-md-4">
-                        <label class="form-label">Trình độ cao nhất</label>
+                        <label class="form-label">Trình độ cao nhất / Highest Degree</label>
                         <select class="form-select" name="trinh_do">
-                            <option value="Đại học">Đại học</option>
-                            <option value="Cao đẳng">Cao đẳng</option>
-                            <option value="Thạc Sỹ">Thạc Sỹ</option>
-                            <option value="Tiến Sỹ">Tiến Sỹ</option>
-                            <option value="Khác">Khác</option>
+                            <option value="Đại học">Đại học / Bachelor</option>
+                            <option value="Cao đẳng">Cao đẳng / College</option>
+                            <option value="Thạc Sỹ">Thạc Sỹ / Master</option>
+                            <option value="Tiến Sỹ">Tiến Sỹ / PhD</option>
+                            <option value="Khác">Khác / Other</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4">
-                        <label class="form-label">Chuyên ngành</label>
+                        <label class="form-label">Chuyên ngành / Major</label>
                         <input type="text" class="form-control" name="chuyen_nganh">
                     </div>
                     <div class="col-12 col-md-4">
-                        <label class="form-label">Trường đào tạo</label>
+                        <label class="form-label">Trường đào tạo / University</label>
                         <input type="text" class="form-control" name="truong_dao_tao">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Bằng cấp khác (nếu có)</label>
+                        <label class="form-label">Bằng cấp khác (nếu có) / Other Certificates</label>
                         <input type="text" class="form-control" name="bang_cap_khac">
                     </div>
                 </div>
@@ -253,66 +253,66 @@
                 <div class="section-header">4. Tài chính & Pháp lý / Finance & Legal</div>
                 <div class="row g-3">
                     <div class="col-12 col-md-4">
-                        <label class="form-label">Tên chủ tài khoản</label>
+                        <label class="form-label">Tên chủ tài khoản / Account Holder</label>
                         <input type="text" class="form-control" name="ten_tk_ngan_hang" style="text-transform: uppercase;">
                     </div>
                     <div class="col-12 col-md-4">
-                        <label class="form-label">Số tài khoản</label>
+                        <label class="form-label">Số tài khoản / Account Number</label>
                         <input type="text" class="form-control" name="so_tk_ngan_hang">
                     </div>
                     <div class="col-12 col-md-4">
-                        <label class="form-label">Ngân hàng - Chi nhánh</label>
+                        <label class="form-label">Ngân hàng - Chi nhánh / Bank - Branch</label>
                         <input type="text" class="form-control" name="chi_nhanh_ngan_hang" placeholder="VD: VCB - CN Ba Đình">
                     </div>
                     <div class="col-12 col-md-4">
-                        <label class="form-label">Mã số thuế cá nhân</label>
+                        <label class="form-label">Mã số thuế cá nhân / Tax Code</label>
                         <input type="text" class="form-control" name="mst_ca_nhan">
                     </div>
                     <div class="col-6 col-md-4">
-                        <label class="form-label">Nơi cấp MST</label>
+                        <label class="form-label">Nơi cấp MST / Tax Place</label>
                         <input type="text" class="form-control" name="noi_cap_mst">
                     </div>
                     <div class="col-6 col-md-4">
-                        <label class="form-label">Ngày cấp MST</label>
+                        <label class="form-label">Ngày cấp MST / Tax Date</label>
                         <input type="date" class="form-control" name="ngay_cap_mst">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Số sổ BHXH (Nếu có)</label>
-                        <input type="text" class="form-control" name="so_bhxh" placeholder="Giảng viên thỉnh giảng bỏ qua">
+                        <label class="form-label">Số sổ BHXH (Nếu có) / Social Insurance No</label>
+                        <input type="text" class="form-control" name="so_bhxh" placeholder="Giảng viên thỉnh giảng bỏ qua / Visiting Lecturers skip this">
                     </div>
                 </div>
 
                 <div class="section-header">5. Gia đình / Family</div>
                 <div class="mb-3">
-                    <label class="form-label text-primary fw-bold">Thông tin con (Họ tên - Ngày sinh)</label>
+                    <label class="form-label text-primary fw-bold">Thông tin con (Họ tên - Ngày sinh) / Children Info</label>
                     <div class="row g-2">
-                        <div class="col-12"><input type="text" class="form-control" name="con_1" placeholder="Con 1..."></div>
-                        <div class="col-12"><input type="text" class="form-control" name="con_2" placeholder="Con 2..."></div>
-                        <div class="col-12"><input type="text" class="form-control" name="con_3" placeholder="Con 3..."></div>
+                        <div class="col-12"><input type="text" class="form-control" name="con_1" placeholder="Con/Child 1 (Name - DOB)"></div>
+                        <div class="col-12"><input type="text" class="form-control" name="con_2" placeholder="Con/Child 2 (Name - DOB)"></div>
+                        <div class="col-12"><input type="text" class="form-control" name="con_3" placeholder="Con/Child 3 (Name - DOB)"></div>
                     </div>
                 </div>
                 
                 <div class="mb-3">
-                     <label class="form-label text-primary fw-bold">Người phụ thuộc (Giảm trừ gia cảnh)</label>
+                     <label class="form-label text-primary fw-bold">Người phụ thuộc (Giảm trừ gia cảnh) / Dependents</label>
                      <div class="card p-2 bg-light mb-2">
                         <div class="row g-2">
-                            <div class="col-12"><input type="text" class="form-control form-control-sm" name="npt_1_ten" placeholder="Họ tên NPT 1"></div>
-                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_1_mst" placeholder="MST NPT 1"></div>
-                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_1_qh" placeholder="Mối quan hệ"></div>
+                            <div class="col-12"><input type="text" class="form-control form-control-sm" name="npt_1_ten" placeholder="Họ tên NPT 1 / Name 1"></div>
+                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_1_mst" placeholder="MST / Tax Code"></div>
+                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_1_qh" placeholder="Quan hệ / Relation"></div>
                         </div>
                      </div>
                      <div class="card p-2 bg-light">
                         <div class="row g-2">
-                            <div class="col-12"><input type="text" class="form-control form-control-sm" name="npt_2_ten" placeholder="Họ tên NPT 2"></div>
-                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_2_mst" placeholder="MST NPT 2"></div>
-                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_2_qh" placeholder="Mối quan hệ"></div>
+                            <div class="col-12"><input type="text" class="form-control form-control-sm" name="npt_2_ten" placeholder="Họ tên NPT 2 / Name 2"></div>
+                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_2_mst" placeholder="MST / Tax Code"></div>
+                            <div class="col-6"><input type="text" class="form-control form-control-sm" name="npt_2_qh" placeholder="Quan hệ / Relation"></div>
                         </div>
                      </div>
                 </div>
 
                 <div class="col-12">
                     <label class="form-label text-danger fw-bold">Liên hệ khẩn cấp / Emergency Contact <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="lien_he_khan_cap" placeholder="Tên - SĐT - Mối quan hệ" required>
+                    <input type="text" class="form-control" name="lien_he_khan_cap" placeholder="Tên - SĐT - Mối quan hệ / Name - Phone - Relation" required>
                 </div>
 
                 <div class="section-header">6. Công việc & Hồ sơ / Job & Docs</div>
@@ -320,39 +320,39 @@
                     <div class="col-12 col-md-6">
                         <label class="form-label">Loại hợp đồng / Contract Type</label>
                         <select class="form-select" name="loai_hop_dong" id="contractType" onchange="checkContractType()">
-                            <option value="Hợp đồng thỉnh giảng">Hợp đồng thỉnh giảng</option>
-                            <option value="Hợp đồng chính thức">Hợp đồng chính thức</option>
-                            <option value="Khác">Khác</option>
+                            <option value="Hợp đồng thỉnh giảng">Hợp đồng thỉnh giảng / Visiting Contract</option>
+                            <option value="Hợp đồng chính thức">Hợp đồng chính thức / Full-time Contract</option>
+                            <option value="Khác">Khác / Other</option>
                         </select>
-                        <input type="text" class="form-control mt-2 d-none" name="loai_hop_dong_khac" id="otherContract" placeholder="Nhập loại hợp đồng...">
+                        <input type="text" class="form-control mt-2 d-none" name="loai_hop_dong_khac" id="otherContract" placeholder="Nhập loại hợp đồng / Type here...">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">Phòng ban / Department</label>
                         <select class="form-select" name="phong_ban">
-                            <option value="Phòng NSVH">Phòng NSVH</option>
-                            <option value="Phòng MKT">Phòng MKT</option>
-                            <option value="Phòng Kinh doanh">Phòng Kinh doanh</option>
-                            <option value="Phòng Đào tạo">Phòng Đào tạo</option>
-                            <option value="Ban Lãnh Đạo">Ban Lãnh Đạo</option>
-                            <option value="Phòng Tuyển sinh">Phòng Tuyển sinh</option>
-                            <option value="Phòng Kế toán">Phòng Kế toán</option>
-                            <option value="Thư ký khoa">Thư ký khoa</option>
-                            <option value="Khoa CH">Khoa CH</option>
-                            <option value="Khoa BCH">Khoa BCH</option>
+                            <option value="Phòng NSVH">Phòng NSVH / HR & Admin</option>
+                            <option value="Phòng MKT">Phòng MKT / Marketing</option>
+                            <option value="Phòng Kinh doanh">Phòng Kinh doanh / Sales</option>
+                            <option value="Phòng Đào tạo">Phòng Đào tạo / Training</option>
+                            <option value="Ban Lãnh Đạo">Ban Lãnh Đạo / Board of Management</option>
+                            <option value="Phòng Tuyển sinh">Phòng Tuyển sinh / Admissions</option>
+                            <option value="Phòng Kế toán">Phòng Kế toán / Accounting</option>
+                            <option value="Thư ký khoa">Thư ký khoa / Faculty Secretary</option>
+                            <option value="Khoa CH">Khoa CH / CH Faculty</option>
+                            <option value="Khoa BCH">Khoa BCH / BCH Faculty</option>
                         </select>
                     </div>
                     
                     <div class="col-12 mt-4">
                         <div class="p-3 border border-primary border-2 border-dashed rounded text-center bg-white">
-                            <label class="form-label fw-bold mb-2 text-primary">Ảnh hồ sơ cá nhân / Photos (Tối đa 5 ảnh) <span class="text-danger">*</span></label>
+                            <label class="form-label fw-bold mb-2 text-primary">Ảnh hồ sơ cá nhân / Photos (Tối đa 5 ảnh / Max 5) <span class="text-danger">*</span></label>
                             <input type="file" class="form-control" id="fileInput" multiple accept="image/*" required>
-                            <small class="text-muted d-block mt-2">Hệ thống sẽ tự tạo thư mục mang tên bạn và lưu ảnh vào đó.</small>
+                            <small class="text-muted d-block mt-2">Hệ thống sẽ tự tạo thư mục mang tên bạn / System will auto-create a folder with your name.</small>
                         </div>
                     </div>
                 </div>
 
                 <div class="btn-submit-wrapper">
-                    <button type="button" class="btn btn-primary btn-submit" id="btnSubmit" onclick="submitForm()">GỬI HỒ SƠ / SUBMIT</button>
+                    <button type="button" class="btn btn-primary btn-submit" id="btnSubmit" onclick="submitForm()">GỬI HỒ SƠ / SUBMIT PROFILE</button>
                 </div>
 
             </form>
@@ -362,12 +362,12 @@
     <div id="loadingOverlay" class="loading-overlay d-none">
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
         <h5 class="mt-3 text-primary" id="loadingText">Đang xử lý dữ liệu...</h5>
-        <p class="text-muted small">Vui lòng không tắt trình duyệt.</p>
+        <p class="text-muted small">Vui lòng không tắt trình duyệt / Please do not close browser.</p>
     </div>
 
-<script>
+    <script>
         // LINK APP SCRIPT CỦA BẠN (Đã kiểm tra: Chính xác)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzo4MVetEijvW0it236OsXGA39XMnhjocTW-bNAXAZ02wZkQVdhHet_0OQPMhpHgpNH-w/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFD_IvoGPzdhEtbJLBqXVHTKWNuv0l4Z8NFM2AwKTTWM0VQUu8sBM7WS8l_ipwb_KqgA/exec";
 
         function checkContractType() {
             const select = document.getElementById('contractType');
@@ -391,7 +391,7 @@
             const loadingOverlay = document.getElementById('loadingOverlay');
             const loadingText = document.getElementById('loadingText');
             loadingOverlay.classList.remove('d-none');
-            loadingText.innerText = "Đang kết nối Server... (Vui lòng đợi)";
+            loadingText.innerText = "Đang kết nối Server... (Connecting...)";
 
             const formData = new FormData(form);
             const dataObj = {};
@@ -402,28 +402,25 @@
             // Gửi dữ liệu Text
             fetch(SCRIPT_URL, {
                 method: "POST",
-                // ĐÃ SỬA: Xóa dòng 'mode: no-cors' để trình duyệt đọc được JSON trả về
                 redirect: "follow",
                 headers: {
                     "Content-Type": "text/plain;charset=utf-8"
                 },
                 body: JSON.stringify({ action: "SAVE_INFO", payload: dataObj })
             })
-            .then(response => response.json()) // Google trả về JSON, ta đọc luôn
+            .then(response => response.json()) 
             .then(response => {
                 if (response.status === 'SUCCESS') {
-                    loadingText.innerText = "Đang lưu ảnh... (Giữ nguyên tab)";
-                    // Lấy được folderId thì mới upload ảnh được
+                    loadingText.innerText = "Đang lưu ảnh... (Uploading photos...)";
                     uploadPhotos(response.folderId);
                 } else {
-                    throw new Error(response.message || "Lỗi không xác định từ Server");
+                    throw new Error(response.message || "Unknown Error");
                 }
             })
             .catch(error => {
                 console.error(error);
-                // Nếu lỗi cú pháp JSON (thường do Google trả về HTML lỗi)
                 if (error instanceof SyntaxError) {
-                    alert("Lỗi kết nối: Server không trả về đúng định dạng. Hãy kiểm tra lại quyền truy cập 'Anyone' trong Apps Script.");
+                    alert("Lỗi kết nối / Connection Error. Check permissions.");
                 } else {
                     alert('Lỗi: ' + error.message);
                 }
@@ -444,12 +441,11 @@
             let uploadedCount = 0;
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-                loadingText.innerText = `Đang tải ảnh ${i + 1}/${files.length}...`;
+                loadingText.innerText = `Uploading image ${i + 1}/${files.length}...`;
                 try {
                     const base64Data = await convertToBase64(file);
                     await fetch(SCRIPT_URL, {
                         method: "POST",
-                        // ĐÃ SỬA: Xóa no-cors ở đây nữa
                         redirect: "follow",
                         headers: { "Content-Type": "text/plain;charset=utf-8" },
                         body: JSON.stringify({ 
@@ -459,7 +455,7 @@
                     });
                     uploadedCount++;
                 } catch (err) {
-                    console.error("Lỗi upload ảnh: ", file.name, err);
+                    console.error("Upload error: ", file.name, err);
                 }
             }
             finishSubmission();
@@ -476,10 +472,10 @@
 
         function finishSubmission() {
             document.getElementById('loadingOverlay').classList.add('d-none');
-            alert("✅ XONG! Hồ sơ đã được gửi thành công.");
+            alert("✅ XONG! Hồ sơ đã được gửi thành công / Submission Successful.");
             document.getElementById('hrForm').reset();
             window.scrollTo(0, 0);
         }
-</script>
+    </script>
 </body>
 </html>
