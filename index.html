@@ -10,7 +10,7 @@
     
     <style>
         :root {
-            --primary-color: #0d6efd; /* Màu chủ đạo */
+            --primary-color: #0056b3; /* Đổi màu xanh đậm hơn cho hợp logo trường */
             --bg-color: #f0f2f5;
             --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
         }
@@ -23,7 +23,7 @@
         }
 
         .main-container {
-            max-width: 960px; /* Tối ưu cho iPad ngang và Laptop */
+            max-width: 960px;
             margin: 20px auto;
             background: white;
             border-radius: 16px;
@@ -40,17 +40,19 @@
         }
 
         .logo-img {
-            max-width: 250px; /* Kích thước logo trên máy tính */
+            max-width: 300px; /* Điều chỉnh kích thước logo cho cân đối */
             height: auto;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            display: inline-block;
         }
 
         .form-title {
-            color: #1a3a5c;
+            color: #b71c1c; /* Màu đỏ đô cho tiêu đề (theo tông logo) */
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             text-transform: uppercase;
             margin-bottom: 0;
+            margin-top: 10px;
         }
 
         /* Form Styling */
@@ -59,15 +61,15 @@
         }
 
         .section-header {
-            background-color: #e7f1ff;
-            color: #0d6efd;
+            background-color: #e3f2fd;
+            color: #0d47a1;
             padding: 12px 15px;
             border-radius: 8px;
             font-weight: 700;
             margin-top: 25px;
             margin-bottom: 20px;
             font-size: 1.1rem;
-            border-left: 5px solid #0d6efd;
+            border-left: 5px solid #0d47a1;
         }
 
         .form-label {
@@ -85,8 +87,8 @@
         }
 
         .form-control:focus, .form-select:focus {
-            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
-            border-color: #86b7fe;
+            box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.25);
+            border-color: #0d47a1;
         }
 
         /* Nút Gửi */
@@ -96,15 +98,16 @@
         }
 
         .btn-submit {
-            background: linear-gradient(45deg, #0d6efd, #0043a8);
+            background: linear-gradient(45deg, #0d47a1, #1976d2);
             border: none;
             padding: 15px 40px;
             font-size: 1.1rem;
             font-weight: bold;
             border-radius: 50px;
             width: 100%;
-            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4);
+            box-shadow: 0 4px 15px rgba(13, 71, 161, 0.4);
             transition: transform 0.2s;
+            color: white;
         }
 
         .btn-submit:active {
@@ -122,20 +125,17 @@
                 padding: 20px 15px;
             }
             .logo-img {
-                max-width: 180px; /* Logo nhỏ hơn trên điện thoại */
+                max-width: 200px; /* Logo nhỏ hơn trên điện thoại */
             }
             .form-title {
-                font-size: 1.2rem;
-            }
-            .section-header {
-                font-size: 1rem;
+                font-size: 1.3rem;
             }
         }
         
         .loading-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.95);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -149,8 +149,8 @@
     <div class="main-container">
         <div class="header-banner">
             <img src="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp" alt="Logo Viet My" class="logo-img">
-            <h1 class="form-title">HỒ SƠ NHÂN SỰ / HR PROFILE</h1>
-            <p class="text-muted mt-2 mb-0">Hệ thống quản lý nhân sự tập trung APCHN</p>
+            <h1 class="form-title">THÔNG TIN NHÂN SỰ / HR PROFILE</h1>
+            <p class="text-muted mt-2 mb-0">Hệ thống quản lý hồ sơ tập trung</p>
         </div>
 
         <div class="form-padding">
@@ -344,9 +344,9 @@
                     
                     <div class="col-12 mt-4">
                         <div class="p-3 border border-primary border-2 border-dashed rounded text-center bg-white">
-                            <label class="form-label fw-bold mb-2">Ảnh hồ sơ cá nhân / Photos (Tối đa 5 ảnh) <span class="text-danger">*</span></label>
+                            <label class="form-label fw-bold mb-2 text-primary">Ảnh hồ sơ cá nhân / Photos (Tối đa 5 ảnh) <span class="text-danger">*</span></label>
                             <input type="file" class="form-control" id="fileInput" multiple accept="image/*" required>
-                            <small class="text-muted d-block mt-2">Chấp nhận: JPG, PNG, WEBP. Hệ thống tự tạo thư mục lưu trữ.</small>
+                            <small class="text-muted d-block mt-2">Hệ thống sẽ tự tạo thư mục mang tên bạn và lưu ảnh vào đó.</small>
                         </div>
                     </div>
                 </div>
