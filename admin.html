@@ -235,11 +235,7 @@
                         html: `
                             <p class="mb-3">${result.msg}</p>
                             <div class="d-grid gap-2">
-                                ${hasLink 
-                                    ? `<a href="${result.link}" target="_blank" class="btn btn-lg btn-success fw-bold shadow"><i class="bi bi-file-earmark-word"></i> MỞ FILE HỢP ĐỒNG</a>` 
-                                    : `<div class="alert alert-danger">n8n chưa trả về Link file. Hãy kiểm tra lại node Webhook Response.</div>`
-                                }
-                                <a href="${result.folderUrl}" target="_blank" class="btn btn-outline-primary"><i class="bi bi-folder-symlink"></i> MỞ THƯ MỤC NHÂN SỰ</a>
+                                  <a href="${result.folderUrl}" target="_blank" class="btn btn-outline-primary"><i class="bi bi-folder-symlink"></i> MỞ THƯ MỤC HỢP ĐỒNG</a>
                             </div>
                         `,
                         showConfirmButton: false, // Ẩn nút OK để người dùng tập trung vào 2 nút trên
