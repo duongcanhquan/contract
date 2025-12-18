@@ -4,94 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUẢN TRỊ HỒ SƠ NHÂN SỰ</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         :root { --primary-color: #0056b3; --bg-color: #f0f2f5; }
-        body { background-color: var(--bg-color); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding-bottom: 60px; }
-        .main-container { max-width: 1000px; margin: 20px auto; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
-        .header-banner { background: white; padding: 20px; text-align: center; border-bottom: 4px solid #d32f2f; }
-        .logo-img { max-width: 220px; }
-        .search-area { background: #fffde7; padding: 25px; border-bottom: 1px solid #eee; position: relative; }
-        .search-input { height: 55px; font-size: 1.2rem; border-radius: 30px; border: 2px solid #fbc02d; }
-        .suggestion-box { position: absolute; top: 85px; left: 25px; right: 25px; background: white; z-index: 1000; box-shadow: 0 15px 35px rgba(0,0,0,0.2); border-radius: 12px; display: none; max-height: 350px; overflow-y: auto; }
-        .suggestion-item { padding: 15px 20px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; justify-content: space-between; }
-        .suggestion-item:hover { background: #fff9c4; }
-        .admin-section { background-color: #fff3e0; border-left: 5px solid #ff9800; padding: 25px; margin: 15px; border-radius: 8px; }
-        .visiting-lecturer-section { background-color: #e8f5e9; border-left: 5px solid #4caf50; padding: 25px; margin: 15px; border-radius: 8px; }
-        .btn-action { padding: 15px 30px; font-weight: bold; border-radius: 50px; min-width: 200px; }
+        body { background-color: var(--bg-color); font-family: 'Roboto', sans-serif; padding-bottom: 60px; }
+        .main-container { max-width: 960px; margin: 20px auto; background: white; border-radius: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: visible; position: relative; }
+        .header-banner { background: white; padding: 20px; text-align: center; border-bottom: 3px solid var(--primary-color); border-radius: 16px 16px 0 0; }
+        .logo-img { max-width: 250px; }
+        .search-area { background: #e3f2fd; padding: 20px; border-bottom: 1px solid #ddd; position: relative; z-index: 1000; }
+        .search-input { height: 50px; font-size: 1.1rem; border-radius: 25px; padding-left: 20px; border: 2px solid #fff; }
+        .suggestion-box { position: absolute; top: 75px; left: 20px; right: 20px; background: white; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border-radius: 12px; display: none; max-height: 400px; overflow-y: auto; }
+        .suggestion-item { padding: 15px 20px; border-bottom: 1px solid #f1f1f1; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .suggestion-item:hover { background-color: #f1f8ff; }
+        .accordion-button { font-weight: bold; color: #0d47a1; background-color: #f8f9fa; }
+        .admin-section { background-color: #fff3e0; border-top: 3px solid #ff9800; padding: 25px; }
+        .visiting-lecturer-section { background-color: #e8f5e9; border-top: 3px solid #2e7d32; padding: 25px; border-radius: 0 0 16px 16px; }
+        .btn-action { padding: 12px 25px; font-weight: bold; text-transform: uppercase; border-radius: 50px; }
         .hidden { display: none !important; }
-        .login-screen { height: 100vh; display: flex; align-items: center; justify-content: center; background: #002a5c; }
+        .login-screen { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #0056b3, #002a5c); }
     </style>
 </head>
 <body>
     <div id="loginScreen" class="login-screen">
-        <div class="card p-4 shadow-lg text-center" style="width: 350px; border-radius: 20px;">
-            <img src="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp" class="mb-4 mx-auto" style="width: 150px;">
-            <h4 class="mb-4 text-primary fw-bold">ADMIN LOGIN</h4>
-            <input type="text" id="u" class="form-control mb-3" placeholder="Username">
-            <input type="password" id="p" class="form-control mb-4" placeholder="Password">
-            <button class="btn btn-primary w-100 fw-bold" onclick="login()">ĐĂNG NHẬP</button>
+        <div class="card p-5 shadow-lg border-0" style="width: 400px; border-radius: 15px;">
+            <div class="text-center mb-4"><img src="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp" alt="Logo" class="logo-img" style="max-width: 180px;"><h5 class="mt-3 text-secondary fw-bold">ADMIN PORTAL</h5></div>
+            <input type="text" id="u" class="form-control mb-3" placeholder="Tài khoản"><input type="password" id="p" class="form-control mb-4" placeholder="Mật khẩu"><button class="btn btn-primary w-100 py-2 fw-bold rounded-pill" onclick="login()">ĐĂNG NHẬP</button>
         </div>
     </div>
 
     <div id="dashboard" class="main-container hidden">
-        <div class="header-banner">
-            <img src="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp" class="logo-img">
-            <h3 class="text-danger fw-bold mt-2">HỆ THỐNG QUẢN TRỊ NHÂN SỰ VĨNH LONG</h3>
-            <button class="btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-3" onclick="location.reload()">Đăng xuất</button>
-        </div>
+        <div class="header-banner"><button class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-3" onclick="location.reload()">Thoát</button><img src="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp" alt="Logo" class="logo-img"></div>
 
         <div class="search-area">
-            <h5 class="text-primary fw-bold mb-3"><i class="bi bi-person-search"></i> Bước 1: Tìm nhân sự cần lập Hợp đồng</h5>
-            <input type="text" id="searchKeyword" class="form-control search-input" placeholder="Nhập Tên hoặc Số CCCD..." onkeyup="handleTyping()">
+            <label class="form-label fw-bold text-primary ms-2"><i class="bi bi-search"></i> Tìm nhân sự:</label>
+            <input type="text" id="searchKeyword" class="form-control search-input" placeholder="Nhập tên hoặc CCCD..." onkeyup="handleTyping()" autocomplete="off">
             <div id="suggestion-box" class="suggestion-box"></div>
         </div>
 
         <form id="adminForm" class="hidden">
             <input type="hidden" id="rowIndex"><input type="hidden" id="folderUrl">
-            
-            <div class="p-3 bg-light border-bottom text-center">
-                <span class="badge bg-primary fs-6">Đang xử lý hồ sơ: <span id="display_name">...</span></span>
+            <div class="accordion" id="accordionProfile">
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">1. Thông tin cá nhân</button></h2>
+                    <div id="c1" class="accordion-collapse collapse show"><div class="accordion-body row g-3">
+                        <div class="col-md-6"><label class="form-label">Họ tên</label><input type="text" class="form-control fw-bold" id="ho_ten" style="text-transform: uppercase;"></div>
+                        <div class="col-md-3"><label class="form-label">Giới tính</label><select class="form-select" id="gioi_tinh"><option value="Nam">Nam</option><option value="Nữ">Nữ</option></select></div>
+                        <div class="col-md-3"><label class="form-label">Quốc tịch</label><input type="text" class="form-control" id="quoc_tich"></div>
+                        <div class="col-md-6"><label class="form-label">Ngày sinh</label><input type="date" class="form-control" id="ngay_sinh"></div>
+                        <div class="col-md-6"><label class="form-label">Nơi sinh</label><input type="text" class="form-control" id="noi_sinh"></div>
+                        <div class="col-md-6"><label class="form-label">SĐT</label><input type="text" class="form-control" id="so_dien_thoai"></div>
+                        <div class="col-md-6"><label class="form-label">Email</label><input type="text" class="form-control" id="email"></div>
+                        <div class="col-md-6"><label class="form-label">Hôn nhân</label><select class="form-select" id="hon_nhan"><option value="Độc thân">Độc thân</option><option value="Đã kết hôn">Đã kết hôn</option></select></div>
+                        <div class="col-12"><label class="form-label">Địa chỉ TT</label><input type="text" class="form-control" id="dia_chi_thuong_tru"></div>
+                        <div class="col-12"><label class="form-label">Nơi ở hiện tại</label><input type="text" class="form-control" id="noi_o_hien_tai"></div>
+                    </div></div>
+                </div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">2. Giấy tờ & Học vấn</button></h2>
+                    <div id="c2" class="accordion-collapse collapse"><div class="accordion-body row g-3">
+                        <div class="col-md-4"><label class="form-label fw-bold text-danger">CCCD</label><input type="text" class="form-control" id="so_cccd"></div>
+                        <div class="col-md-4"><label class="form-label">Ngày cấp</label><input type="date" class="form-control" id="ngay_cap_cccd"></div>
+                        <div class="col-md-4"><label class="form-label">Nơi cấp</label><input type="text" class="form-control" id="noi_cap_cccd"></div>
+                        <div class="col-md-6"><label class="form-label">Trình độ</label><input type="text" class="form-control" id="trinh_do"></div>
+                        <div class="col-md-6"><label class="form-label">Chuyên ngành</label><input type="text" class="form-control" id="chuyen_nganh"></div>
+                        <div class="col-md-6"><label class="form-label">Trường</label><input type="text" class="form-control" id="truong_dao_tao"></div>
+                        <div class="col-md-6"><label class="form-label">Bằng khác</label><input type="text" class="form-control" id="bang_cap_khac"></div>
+                    </div></div>
+                </div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">3. Tài chính & Thuế</button></h2>
+                    <div id="c4" class="accordion-collapse collapse"><div class="accordion-body row g-3">
+                        <div class="col-md-6"><label class="form-label">Tên TK Ngân hàng</label><input type="text" class="form-control fw-bold" id="ten_tk_ngan_hang" style="text-transform: uppercase;"></div>
+                        <div class="col-md-6"><label class="form-label">Số tài khoản</label><input type="text" class="form-control" id="so_tk_ngan_hang"></div>
+                        <div class="col-12"><label class="form-label">Chi nhánh</label><input type="text" class="form-control" id="chi_nhanh_ngan_hang"></div>
+                        <div class="col-md-4"><label class="form-label">Mã số thuế</label><input type="text" class="form-control" id="mst_ca_nhan"></div>
+                        <div class="col-md-4"><label class="form-label">Ngày cấp MST</label><input type="date" class="form-control" id="ngay_cap_mst"></div>
+                        <div class="col-md-4"><label class="form-label">Nơi cấp MST</label><input type="text" class="form-control" id="noi_cap_mst"></div>
+                        <div class="col-md-6"><label class="form-label">Số sổ BHXH</label><input type="text" class="form-control" id="so_bhxh"></div>
+                    </div></div>
+                </div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">4. Gia đình & Người phụ thuộc</button></h2>
+                    <div id="c3" class="accordion-collapse collapse"><div class="accordion-body">
+                        <input type="text" class="form-control mb-2" id="con_1" placeholder="Con 1"><input type="text" class="form-control mb-2" id="con_2" placeholder="Con 2"><input type="text" class="form-control mb-2" id="con_3" placeholder="Con 3">
+                        <hr>
+                        <div class="row g-2"><div class="col-md-4"><input type="text" id="npt_1_ten" class="form-control" placeholder="NPT1 Tên"></div><div class="col-md-4"><input type="text" id="npt_1_mst" class="form-control" placeholder="NPT1 MST"></div><div class="col-md-4"><input type="text" id="npt_1_qh" class="form-control" placeholder="Quan hệ"></div></div>
+                    </div></div>
+                </div>
             </div>
 
             <div class="admin-section">
-                <h5 class="fw-bold text-orange mb-3"><i class="bi bi-gear-fill"></i> THIẾT LẬP HỢP ĐỒNG</h5>
                 <div class="row g-3">
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Loại hợp đồng</label>
-                        <select id="loai_hop_dong_admin" class="form-select border-primary">
-                            <option value="Hợp đồng thỉnh giảng">Hợp đồng thỉnh giảng</option>
-                            <option value="Hợp đồng dịch vụ">Hợp đồng dịch vụ</option>
-                        </select>
+                    <div class="col-md-4"><label class="form-label fw-bold">Loại hợp đồng</label>
+                        <select id="loai_hop_dong_admin" class="form-select border-warning"><option value="Hợp đồng thỉnh giảng">Hợp đồng thỉnh giảng</option><option value="Hợp đồng dịch vụ">Hợp đồng dịch vụ</option></select>
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Năm học</label>
-                        <select id="nam_hoc" class="form-select border-primary">
-                            <option value="2024-2025">2024-2025</option>
-                            <option value="2025-2026">2025-2026</option>
-                            <option value="2026-2027">2026-2027</option>
-                            <option value="2027-2028">2027-2028</option>
-                        </select>
+                    <div class="col-md-4"><label class="form-label fw-bold text-danger">Năm học</label>
+                        <select id="nam_hoc" class="form-select border-danger"><option value="2024-2025">2024-2025</option><option value="2025-2026">2025-2026</option><option value="2026-2027">2026-2027</option><option value="2027-2028">2027-2028</option></select>
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Ngày ký hợp đồng</label>
-                        <input type="date" id="ngay_ky" class="form-control border-primary">
-                    </div>
-                    <div class="col-md-4"><label class="form-label fw-bold">Ngày bắt đầu</label><input type="date" id="ngay_bat_dau" class="form-control"></div>
-                    <div class="col-md-4"><label class="form-label fw-bold">Ngày kết thúc</label><input type="date" id="ngay_ket_thuc" class="form-control"></div>
-                    <div class="col-md-4"><label class="form-label fw-bold">Mức lương / Phí</label><input type="text" id="muc_luong" class="form-control fw-bold text-danger"></div>
-                    <div class="col-12"><label class="form-label fw-bold">Thời gian làm việc</label><input type="text" id="thoi_gian_lam_viec" class="form-control"></div>
+                    <div class="col-md-4"><label class="form-label fw-bold text-danger">Ngày ký hợp đồng</label><input type="date" id="ngay_ky" class="form-control border-danger"></div>
+                    <div class="col-md-4"><label class="form-label fw-bold">Ngày bắt đầu</label><input type="date" id="ngay_bat_dau" class="form-control border-warning"></div>
+                    <div class="col-md-4"><label class="form-label fw-bold">Ngày kết thúc</label><input type="date" id="ngay_ket_thuc" class="form-control border-warning"></div>
+                    <div class="col-md-4"><label class="form-label fw-bold">Mức lương / Phí</label><input type="text" id="muc_luong" class="form-control border-warning fw-bold text-danger"></div>
+                    <div class="col-12"><label class="form-label fw-bold">Thời gian làm việc</label><input type="text" id="thoi_gian_lam_viec" class="form-control border-warning"></div>
                 </div>
             </div>
 
             <div class="visiting-lecturer-section">
-                <h5 class="fw-bold text-success mb-3"><i class="bi bi-list-check"></i> CHI TIẾT MÔN HỌC (THỈNH GIẢNG)</h5>
                 <table class="table table-bordered bg-white shadow-sm">
-                    <thead class="table-dark text-center">
-                        <tr><th>Môn học</th><th>Số giờ</th><th>Thù lao/Giờ</th></tr>
-                    </thead>
+                    <thead class="table-success text-center"><tr><th>Môn học</th><th>Số giờ</th><th>Thù lao/Giờ</th></tr></thead>
                     <tbody>
                         <tr><td><input type="text" id="mon_hoc_1" class="form-control"></td><td><input type="text" id="so_gio_1" class="form-control"></td><td><input type="text" id="luong_gio_1" class="form-control"></td></tr>
                         <tr><td><input type="text" id="mon_hoc_2" class="form-control"></td><td><input type="text" id="so_gio_2" class="form-control"></td><td><input type="text" id="luong_gio_2" class="form-control"></td></tr>
@@ -100,35 +119,22 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <button type="button" class="btn btn-outline-secondary btn-action" onclick="submitUpdate(true)">CHỈ LƯU SHEET</button>
-                    <button type="button" class="btn btn-success btn-action" onclick="submitUpdate(false)">XUẤT HỢP ĐỒNG</button>
+                    <button type="button" class="btn btn-secondary btn-action" onclick="submitUpdate(true)">CHỈ LƯU SHEET</button>
+                    <button type="button" class="btn btn-primary btn-action" onclick="submitUpdate(false)">XUẤT HỢP ĐỒNG</button>
                 </div>
             </div>
-            
-            <div class="hidden">
-                <input type="text" id="ho_ten"><input type="text" id="so_cccd"><input type="text" id="email">
-                <input type="text" id="so_dien_thoai"><input type="text" id="dia_chi_thuong_tru">
-                </div>
         </form>
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEgduvhIJS6z44fGOWMuRKqFas3CwcYyPLpwhXIKXrxLMTH7FuUQExweRTXIMA7citbg/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzS0fPpPMSsIm3rFEvvkH-1KywvpkZTWjCnXLpLT_eIi6Mxa_Trz3NooPkV15njfb6eSA/exec";
+        function login() { if(document.getElementById('u').value==='hradmin' && document.getElementById('p').value==='vietmy@1221') { document.getElementById('loginScreen').classList.add('hidden'); document.getElementById('dashboard').classList.remove('hidden'); document.getElementById('ngay_ky').value = new Date().toISOString().split('T')[0]; } else alert('Sai thông tin!'); }
         
-        function login() {
-            if(document.getElementById('u').value==='hradmin' && document.getElementById('p').value==='vietmy@1221') {
-                document.getElementById('loginScreen').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
-                // Set mặc định ngày ký là hôm nay
-                document.getElementById('ngay_ky').value = new Date().toISOString().split('T')[0];
-            } else Swal.fire('Lỗi', 'Sai thông tin đăng nhập!', 'error');
-        }
-
         let timeout = null;
         function handleTyping() {
             const k = document.getElementById('searchKeyword').value;
             if(timeout) clearTimeout(timeout);
-            if(k.length < 2) return;
+            if(k.length < 1) { document.getElementById('suggestion-box').style.display='none'; return; }
             timeout = setTimeout(() => {
                 fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'SEARCH_CANDIDATE', keyword: k }) })
                 .then(r=>r.json()).then(data => {
@@ -137,63 +143,38 @@
                         box.style.display='block';
                         data.message.forEach(u => {
                             const div = document.createElement('div'); div.className='suggestion-item';
-                            div.innerHTML = `<span><b>${u.ho_ten}</b> - ${u.so_cccd}</span><i class="bi bi-arrow-right-circle text-primary"></i>`;
+                            div.innerHTML = `<div><b>${u.ho_ten}</b> - ${u.so_cccd}</div><i class="bi bi-chevron-right"></i>`;
                             div.onclick=()=>fillForm(u); box.appendChild(div);
                         });
-                    }
+                    } else { box.style.display='block'; box.innerHTML='<div class="p-3 text-muted">Không tìm thấy</div>'; }
                 });
-            }, 400);
+            }, 500);
         }
 
         function fillForm(u) {
             document.getElementById('suggestion-box').style.display='none';
             document.getElementById('adminForm').classList.remove('hidden');
-            document.getElementById('display_name').innerText = u.ho_ten;
-            
-            // Map dữ liệu vào các input
-            Object.keys(u).forEach(key => {
-                let el = document.getElementById(key);
-                if(el) el.value = u[key] || "";
-            });
+            document.getElementById('searchKeyword').value = u.ho_ten;
+            Object.keys(u).forEach(f => { if(document.getElementById(f)) document.getElementById(f).value = u[f] || ''; });
         }
 
         function submitUpdate(onlySave) {
-            Swal.fire({
-                title: 'Xác nhận?',
-                text: onlySave ? "Bạn chỉ muốn lưu dữ liệu vào Google Sheet?" : "Hệ thống sẽ lưu dữ liệu và tạo Hợp đồng mới!",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Đồng ý',
-                cancelButtonText: 'Hủy'
-            }).then((res) => {
-                if(res.isConfirmed) {
-                    Swal.fire({ title: 'Đang xử lý...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-                    
-                    const payload = {};
-                    document.querySelectorAll('input, select').forEach(el => { if(el.id) payload[el.id] = el.value; });
-                    payload.onlySave = onlySave;
+            Swal.fire({ title: 'Đang xử lý...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+            const payload = {};
+            document.querySelectorAll('input, select').forEach(el => { if(el.id) payload[el.id] = el.value || ""; });
+            payload.onlySave = onlySave;
 
-                    fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'UPDATE_CONTRACT', payload: payload }) })
-                    .then(r => r.json())
-                    .then(data => {
-                        if(onlySave) {
-                            Swal.fire('Thành công', 'Dữ liệu đã được cập nhật!', 'success');
-                        } else {
-                            Swal.fire({
-                                title: 'XUẤT HỢP ĐỒNG THÀNH CÔNG!',
-                                html: `
-                                    <p class="text-success fw-bold">${data.message.msg}</p>
-                                    <div class="d-grid gap-2 mt-3">
-                                        <a href="${data.message.fileUrl}" target="_blank" class="btn btn-primary fw-bold">📄 MỞ HỢP ĐỒNG VỪA TẠO</a>
-                                        <a href="${data.message.folderUrl}" target="_blank" class="btn btn-outline-dark">📂 MỞ THƯ MỤC NHÂN SỰ</a>
-                                    </div>
-                                `,
-                                icon: 'success'
-                            });
-                        }
-                    }).catch(e => Swal.fire('Lỗi', e.toString(), 'error'));
+            fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'UPDATE_CONTRACT', payload: payload }) })
+            .then(r => r.json()).then(data => {
+                if(onlySave) Swal.fire('Thành công', 'Đã lưu thay đổi!', 'success');
+                else {
+                    Swal.fire({
+                        title: 'THÀNH CÔNG!',
+                        html: `<p class="text-success fw-bold">${data.message.msg}</p><div class="d-grid gap-2"><a href="${data.message.fileUrl}" target="_blank" class="btn btn-primary">📄 MỞ HỢP ĐỒNG</a><a href="${data.message.folderUrl}" target="_blank" class="btn btn-outline-dark">📂 THƯ MỤC NHÂN SỰ</a></div>`,
+                        icon: 'success'
+                    });
                 }
-            });
+            }).catch(e => Swal.fire('Lỗi', e.toString(), 'error'));
         }
     </script>
 </body>
