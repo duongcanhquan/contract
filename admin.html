@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <style>
         :root { --primary-color: #0056b3; --bg-color: #f0f2f5; }
         body { background-color: var(--bg-color); font-family: 'Roboto', sans-serif; padding-bottom: 60px; }
@@ -28,12 +29,13 @@
     </style>
 </head>
 <body>
+
     <div id="loginScreen" class="login-screen">
         <div class="card p-5 shadow-lg border-0" style="width: 400px; border-radius: 15px;">
             <div class="text-center mb-4"><img src="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp" style="max-width: 180px;"></div>
             <input type="text" id="u" class="form-control mb-3" placeholder="Tài khoản">
             <input type="password" id="p" class="form-control mb-4" placeholder="Mật khẩu">
-            <button class="btn btn-primary w-100 py-2 fw-bold rounded-pill" onclick="login()">ĐĂNG NHẬP</button>
+            <button class="btn btn-primary w-100 py-2 fw-bold rounded-pill" onclick="login()">ĐĂNG NHẬP QUẢN TRỊ</button>
         </div>
     </div>
 
@@ -44,7 +46,7 @@
         </div>
 
         <div class="search-area">
-            <input type="text" id="searchKeyword" class="form-control search-input" placeholder="Tìm tên hoặc CCCD..." onkeyup="handleTyping()" autocomplete="off">
+            <input type="text" id="searchKeyword" class="form-control search-input" placeholder="Nhập tên hoặc số CCCD nhân viên..." onkeyup="handleTyping()" autocomplete="off">
             <div id="suggestion-box" class="suggestion-box"></div>
         </div>
 
@@ -102,25 +104,30 @@
                     <div class="col-md-4">
                         <label class="form-label fw-bold text-danger">Loại hợp đồng *</label>
                         <select id="loai_hop_dong_admin" class="form-select border-danger shadow-sm" onchange="checkContractType()">
-                            <option value="">-- Bắt buộc chọn --</option>
+                            <option value="">-- Chọn loại hợp đồng --</option>
                             <option value="Hợp đồng thỉnh giảng">Hợp đồng thỉnh giảng</option>
                             <option value="Hợp đồng dịch vụ">Hợp đồng dịch vụ</option>
                         </select>
                     </div>
-                    <div class="col-md-4"><label class="form-label fw-bold">Năm học</label>
-                        <select id="nam_hoc" class="form-select"><option value="2024-2025">2024-2025</option><option value="2025-2026">2025-2026</option></select>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Năm học</label>
+                        <select id="nam_hoc" class="form-select">
+                            <option value="2024-2025">2024-2025</option>
+                            <option value="2025-2026">2025-2026</option>
+                        </select>
                     </div>
                     <div class="col-md-4"><label class="form-label fw-bold">Ngày ký</label><input type="date" id="ngay_ky" class="form-control"></div>
+                    
                     <div class="col-md-4"><label class="form-label fw-bold">Ngày bắt đầu</label><input type="date" id="ngay_bat_dau" class="form-control"></div>
                     <div class="col-md-4"><label class="form-label fw-bold">Ngày kết thúc</label><input type="date" id="ngay_ket_thuc" class="form-control"></div>
-                    <div class="col-md-4"><label class="form-label fw-bold">Mức phí</label><input type="text" id="muc_luong" class="form-control"></div>
+                    <div class="col-md-4"><label class="form-label fw-bold">Mức lương/Phí</label><input type="text" id="muc_luong" class="form-control"></div>
                 </div>
             </div>
 
             <div class="visiting-lecturer-section text-center">
                 <div class="d-flex justify-content-center gap-3">
                     <button type="button" class="btn btn-secondary btn-action" onclick="submitUpdate(true)">CHỈ LƯU SHEET</button>
-                    <button type="button" id="btnCreateHD" class="btn btn-primary btn-action" onclick="submitUpdate(false)" disabled title="Vui lòng chọn Loại hợp đồng trước">XUẤT HỢP ĐỒNG</button>
+                    <button type="button" id="btnCreateHD" class="btn btn-primary btn-action" onclick="submitUpdate(false)" disabled title="Chọn loại hợp đồng trước">XUẤT HỢP ĐỒNG</button>
                 </div>
             </div>
         </form>
@@ -128,14 +135,21 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzZsJvb600lQLg5oaxxxH5tBz_xlMt4JQKObLq-aNGFntbEmgFAVQn6v7LeThdVn21zOA/exec";
+        // QUAN TRỌNG: Thay URL bên dưới bằng URL Web App (Exec) của bạn sau khi Deploy
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNkAmErQPLv7GOGtKInpgOucDy8qYytZ7L-TfNskakmcvYcsS4qXE74I-saOD2yC4itA/exec";
         
         function login() { 
-            if(document.getElementById('u').value==='hradmin' && document.getElementById('p').value==='vietmy@1221') { 
+            const u = document.getElementById('u').value;
+            const p = document.getElementById('p').value;
+            // Password đơn giản, bạn có thể đổi
+            if(u === 'hradmin' && p === 'vietmy@1221') { 
                 document.getElementById('loginScreen').classList.add('hidden'); 
                 document.getElementById('dashboard').classList.remove('hidden');
+                // Tự động set ngày ký là hôm nay
                 document.getElementById('ngay_ky').value = new Date().toISOString().split('T')[0];
-            } else alert('Sai mật khẩu!'); 
+            } else {
+                Swal.fire('Lỗi', 'Sai tài khoản hoặc mật khẩu!', 'error'); 
+            }
         }
 
         function checkContractType() {
@@ -148,16 +162,25 @@
             const k = document.getElementById('searchKeyword').value;
             if(timeout) clearTimeout(timeout);
             if(k.length < 2) return;
+            
             timeout = setTimeout(() => {
-                fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'SEARCH_CANDIDATE', keyword: k }) })
-                .then(r=>r.json()).then(data => {
+                fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    body: JSON.stringify({ action: 'SEARCH_CANDIDATE', keyword: k }) 
+                })
+                .then(r => r.json())
+                .then(data => {
                     const box = document.getElementById('suggestion-box'); box.innerHTML='';
-                    if(data.status==='SUCCESS') {
-                        box.style.display='block';
+                    if(data.status === 'SUCCESS') {
+                        box.style.display = 'block';
+                        if(data.message.length === 0) {
+                            box.innerHTML = '<div class="p-3 text-muted">Không tìm thấy nhân viên nào.</div>';
+                        }
                         data.message.forEach(u => {
                             const div = document.createElement('div'); div.className='suggestion-item';
-                            div.innerHTML = `<span><b>${u.ho_ten}</b> - ${u.so_cccd}</span><i class="bi bi-arrow-right"></i>`;
-                            div.onclick=()=>fillForm(u); box.appendChild(div);
+                            div.innerHTML = `<span><b>${u.ho_ten}</b> - ${u.so_cccd}</span><i class="bi bi-pencil-square text-primary"></i>`;
+                            div.onclick = () => fillForm(u); 
+                            box.appendChild(div);
                         });
                     }
                 });
@@ -167,6 +190,7 @@
         function fillForm(u) {
             document.getElementById('suggestion-box').style.display='none';
             document.getElementById('adminForm').classList.remove('hidden');
+            // Điền dữ liệu vào form
             Object.keys(u).forEach(key => {
                 let el = document.getElementById(key);
                 if(el) el.value = u[key] || "";
@@ -175,30 +199,57 @@
         }
 
         function submitUpdate(onlySave) {
-            Swal.fire({ title: 'Đang xử lý...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+            // Hiển thị loading
+            Swal.fire({ 
+                title: onlySave ? 'Đang lưu Sheet...' : 'Đang tạo Hợp đồng...', 
+                html: 'Vui lòng đợi trong giây lát.',
+                allowOutsideClick: false, 
+                didOpen: () => { Swal.showLoading(); } 
+            });
+
+            // Thu thập dữ liệu form
             const payload = {};
-            document.querySelectorAll('input, select').forEach(el => { if(el.id) payload[el.id] = el.value || ""; });
+            document.querySelectorAll('input, select').forEach(el => { 
+                if(el.id) payload[el.id] = el.value || ""; 
+            });
             payload.onlySave = onlySave;
 
-            fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'UPDATE_CONTRACT', payload: payload }) })
-            .then(r => r.json()).then(data => {
+            // Gửi yêu cầu
+            fetch(SCRIPT_URL, { 
+                method: 'POST', 
+                body: JSON.stringify({ action: 'UPDATE_CONTRACT', payload: payload }) 
+            })
+            .then(r => r.json())
+            .then(data => {
+                const result = data.message; // Object chứa msg, link, folderUrl
+                
                 if(onlySave) {
-                    Swal.fire('Thành công', 'Đã cập nhật Sheet!', 'success');
+                    Swal.fire('Đã lưu!', result.msg, 'success');
                 } else {
-                    const hasFile = data.message.fileUrl && data.message.fileUrl !== "";
+                    // Kiểm tra xem có Link file trả về không
+                    const hasLink = result.link && result.link !== "";
+                    
                     Swal.fire({
-                        title: hasFile ? 'THÀNH CÔNG!' : 'LƯU OK - FILE LỖI',
+                        title: hasLink ? 'THÀNH CÔNG!' : 'CẢNH BÁO',
+                        icon: hasLink ? 'success' : 'warning',
                         html: `
-                            <p>${data.message.msg}</p>
-                            <div class="d-grid gap-2 mt-3">
-                                ${hasFile ? `<a href="${data.message.fileUrl}" target="_blank" class="btn btn-primary">📄 XEM HỢP ĐỒNG</a>` : `<div class="alert alert-warning small">Cảnh báo: n8n không tạo được file. Vui lòng kiểm tra lại n8n.</div>`}
-                                <a href="${data.message.folderUrl}" target="_blank" class="btn btn-outline-dark">📂 MỞ THƯ MỤC NHÂN SỰ</a>
+                            <p class="mb-3">${result.msg}</p>
+                            <div class="d-grid gap-2">
+                                ${hasLink 
+                                    ? `<a href="${result.link}" target="_blank" class="btn btn-lg btn-success fw-bold shadow"><i class="bi bi-file-earmark-word"></i> MỞ FILE HỢP ĐỒNG</a>` 
+                                    : `<div class="alert alert-danger">n8n chưa trả về Link file. Hãy kiểm tra lại node Webhook Response.</div>`
+                                }
+                                <a href="${result.folderUrl}" target="_blank" class="btn btn-outline-primary"><i class="bi bi-folder-symlink"></i> MỞ THƯ MỤC NHÂN SỰ</a>
                             </div>
                         `,
-                        icon: hasFile ? 'success' : 'warning'
+                        showConfirmButton: false, // Ẩn nút OK để người dùng tập trung vào 2 nút trên
+                        showCloseButton: true
                     });
                 }
-            }).catch(e => Swal.fire('Lỗi kết nối', e.toString(), 'error'));
+            })
+            .catch(e => {
+                Swal.fire('Lỗi kết nối', 'Không thể kết nối đến Apps Script: ' + e.toString(), 'error');
+            });
         }
     </script>
 </body>
