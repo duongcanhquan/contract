@@ -7,75 +7,107 @@
     <link rel="icon" href="https://raw.githubusercontent.com/duongcanhquan/image/main/logo%20vietmy.webp">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        :root { --primary-color: #0056b3; --secondary-color: #f0f2f5; }
-        body { background-color: var(--secondary-color); font-family: 'Roboto', sans-serif; padding-bottom: 40px; }
+        :root { 
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+        }
+
+        body { 
+            background: #f0f2f5 url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Quicksand', sans-serif;
+            padding-bottom: 40px;
+        }
         
+        /* Glassmorphism Effect */
         .main-container {
-            max-width: 900px;
-            margin: 30px auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 950px;
+            margin: 40px auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             overflow: hidden;
         }
 
         .header-banner {
-            background: white;
-            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 40px 20px;
             text-align: center;
-            border-bottom: 4px solid var(--primary-color);
+            border-bottom: 1px solid var(--glass-border);
         }
 
-        .logo-img { max-height: 80px; margin-bottom: 15px; }
-        .page-title { color: #d32f2f; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
-        .page-subtitle { color: #555; font-size: 0.95rem; margin-top: 5px; }
+        .logo-img { max-height: 90px; margin-bottom: 20px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .page-title { color: #1a2a6c; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
+        .page-subtitle { color: #4a4a4a; font-size: 1rem; margin-top: 5px; font-weight: 500; }
 
-        /* Section Styling */
-        .form-section { padding: 30px; border-bottom: 1px solid #eee; }
+        .form-section { 
+            padding: 35px; 
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .form-section:hover { background: rgba(255, 255, 255, 0.3); }
+
         .section-title {
-            color: var(--primary-color);
+            color: #1a2a6c;
             font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 20px;
-            display: flex; align-items: center; gap: 10px;
-            font-size: 1.1rem;
+            margin-bottom: 25px;
+            display: flex; align-items: center; gap: 12px;
+            font-size: 1.15rem;
         }
-        .section-title i { font-size: 1.3rem; }
+        .section-title i { 
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem; 
+        }
 
-        .form-label { font-weight: 500; color: #333; font-size: 0.95rem; }
+        .form-label { font-weight: 600; color: #333; font-size: 0.9rem; margin-bottom: 8px; }
         .form-control, .form-select {
-            padding: 10px 15px;
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 12px 18px;
+            transition: all 0.3s ease;
         }
         .form-control:focus, .form-select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
+            background: #fff;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         }
 
-        /* Button */
         .btn-submit {
-            background: linear-gradient(45deg, #0056b3, #004494);
+            background: var(--primary-gradient);
             color: white;
-            font-weight: bold;
+            font-weight: 700;
             text-transform: uppercase;
-            padding: 15px 40px;
-            border-radius: 50px;
+            padding: 18px 40px;
+            border-radius: 16px;
             border: none;
-            box-shadow: 0 4px 15px rgba(0, 86, 179, 0.3);
-            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(118, 75, 162, 0.3);
+            transition: all 0.4s;
             width: 100%;
+            letter-spacing: 1px;
         }
-        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 86, 179, 0.5); }
-        .btn-submit:disabled { background: #ccc; transform: none; box-shadow: none; cursor: not-allowed; }
+        .btn-submit:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 15px 25px rgba(118, 75, 162, 0.4);
+            filter: brightness(1.1);
+        }
+        .btn-submit:active { transform: translateY(0); }
 
-        /* Footer Link */
-        .admin-link a { color: #999; font-size: 0.8rem; text-decoration: none; transition: 0.3s; }
-        .admin-link a:hover { color: var(--primary-color); text-decoration: underline; }
+        .admin-link a { color: #7f8c8d; font-size: 0.85rem; text-decoration: none; font-weight: 500; }
+        .admin-link a:hover { color: #1a2a6c; }
+        
+        .bg-glass-light { background: rgba(255, 255, 255, 0.4); }
+        .required-star { color: #e74c3c; margin-left: 3px; }
     </style>
 </head>
 <body>
@@ -90,14 +122,14 @@
         <form id="hrForm" onsubmit="submitForm(event)">
             
             <div class="form-section">
-                <div class="section-title"><i class="bi bi-person-lines-fill"></i> 1. Thông tin cá nhân / Personal Information</div>
-                <div class="row g-3">
+                <div class="section-title"><i class="bi bi-person-badge-fill"></i> 1. Thông tin cá nhân / Personal Info</div>
+                <div class="row g-4">
                     <div class="col-md-6">
-                        <label class="form-label">Họ và tên / Full Name <span class="text-danger">*</span></label>
+                        <label class="form-label">Họ và tên / Full Name <span class="required-star">*</span></label>
                         <input type="text" id="ho_ten" class="form-control" required style="text-transform: uppercase;" placeholder="NGUYEN VAN A">
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Giới tính / Gender <span class="text-danger">*</span></label>
+                        <label class="form-label">Giới tính / Gender <span class="required-star">*</span></label>
                         <select id="gioi_tinh" class="form-select" required>
                             <option value="">-- Chọn --</option>
                             <option value="Nam">Nam / Male</option>
@@ -110,20 +142,20 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label">Ngày sinh / Date of Birth <span class="text-danger">*</span></label>
+                        <label class="form-label">Ngày sinh / Date of Birth <span class="required-star">*</span></label>
                         <input type="date" id="ngay_sinh" class="form-control" required>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Nơi sinh / Place of Birth <span class="text-danger">*</span></label>
+                        <label class="form-label">Nơi sinh / Place of Birth <span class="required-star">*</span></label>
                         <input type="text" id="noi_sinh" class="form-control" required placeholder="Tỉnh/Thành phố...">
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label">Số điện thoại / Phone <span class="text-danger">*</span></label>
+                        <label class="form-label">Số điện thoại / Phone <span class="required-star">*</span></label>
                         <input type="tel" id="so_dien_thoai" class="form-control" required placeholder="09xxxxxxx">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Email cá nhân / Email <span class="text-danger">*</span></label>
+                        <label class="form-label">Email cá nhân / Email <span class="required-star">*</span></label>
                         <input type="email" id="email" class="form-control" required placeholder="example@gmail.com">
                     </div>
 
@@ -137,39 +169,39 @@
                     </div>
 
                     <div class="col-12">
-                        <label class="form-label">Địa chỉ thường trú / Permanent Address <span class="text-danger">*</span></label>
+                        <label class="form-label">Địa chỉ thường trú / Permanent Address <span class="required-star">*</span></label>
                         <input type="text" id="dia_chi_thuong_tru" class="form-control" required placeholder="Theo sổ hộ khẩu / As per ID card">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Nơi ở hiện tại / Current Address <span class="text-danger">*</span></label>
+                        <label class="form-label">Nơi ở hiện tại / Current Address <span class="required-star">*</span></label>
                         <input type="text" id="noi_o_hien_tai" class="form-control" required>
                     </div>
                 </div>
             </div>
 
-            <div class="form-section bg-light">
-                <div class="section-title"><i class="bi bi-card-heading"></i> 2. Giấy tờ tùy thân / Identity</div>
-                <div class="row g-3">
+            <div class="form-section bg-glass-light">
+                <div class="section-title"><i class="bi bi-card-checklist"></i> 2. Giấy tờ tùy thân / Identity</div>
+                <div class="row g-4">
                     <div class="col-md-4">
-                        <label class="form-label">Số CCCD / ID Number <span class="text-danger">*</span></label>
+                        <label class="form-label">Số CCCD / ID Number <span class="required-star">*</span></label>
                         <input type="text" id="so_cccd" class="form-control fw-bold" required>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Ngày cấp / Date of Issue <span class="text-danger">*</span></label>
+                        <label class="form-label">Ngày cấp / Date of Issue <span class="required-star">*</span></label>
                         <input type="date" id="ngay_cap_cccd" class="form-control" required>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Nơi cấp / Place of Issue <span class="text-danger">*</span></label>
+                        <label class="form-label">Nơi cấp / Place of Issue <span class="required-star">*</span></label>
                         <input type="text" id="noi_cap_cccd" class="form-control" required placeholder="Cục CS QLHC...">
                     </div>
                 </div>
             </div>
 
             <div class="form-section">
-                <div class="section-title"><i class="bi bi-mortarboard"></i> 3. Trình độ học vấn / Education</div>
-                <div class="row g-3">
+                <div class="section-title"><i class="bi bi-book-half"></i> 3. Trình độ học vấn / Education</div>
+                <div class="row g-4">
                     <div class="col-md-6">
-                        <label class="form-label">Trình độ cao nhất / Highest Degree <span class="text-danger">*</span></label>
+                        <label class="form-label">Trình độ cao nhất / Highest Degree <span class="required-star">*</span></label>
                         <select id="trinh_do" class="form-select" required>
                             <option value="">-- Chọn / Select --</option>
                             <option value="Tiến sĩ">Tiến sĩ / PhD</option>
@@ -195,27 +227,25 @@
                 </div>
             </div>
 
-            <div class="form-section bg-light">
-                <div class="section-title"><i class="bi bi-bank"></i> 4. Tài chính & Thuế / Finance & Tax</div>
-                <div class="row g-3">
+            <div class="form-section bg-glass-light">
+                <div class="section-title"><i class="bi bi-wallet2"></i> 4. Tài chính & Thuế / Finance & Tax</div>
+                <div class="row g-4">
                     <div class="col-md-6">
-                        <label class="form-label">Ngân hàng / Bank Name <span class="text-danger">*</span></label>
+                        <label class="form-label">Tên ngân hàng / Bank Name <span class="required-star">*</span></label>
                         <input type="text" id="chi_nhanh_ngan_hang" class="form-control" required placeholder="Vietcombank, Techcombank...">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Số tài khoản / Account No <span class="text-danger">*</span></label>
+                        <label class="form-label">Số tài khoản / Account No <span class="required-star">*</span></label>
                         <input type="text" id="so_tk_ngan_hang" class="form-control fw-bold" required>
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Tên chủ tài khoản / Account Name <span class="text-danger">*</span></label>
+                        <label class="form-label">Tên chủ tài khoản / Account Name <span class="required-star">*</span></label>
                         <input type="text" id="ten_tk_ngan_hang" class="form-control" required style="text-transform: uppercase;">
-                        <div class="form-text">Phải trùng với tên người nộp hồ sơ / Must match applicant's name.</div>
+                        <div class="form-text text-muted">Viết hoa không dấu, trùng với CMND/CCCD.</div>
                     </div>
                     
-                    <hr class="my-3">
-                    
                     <div class="col-md-4">
-                        <label class="form-label">Mã số thuế / Tax Code <span class="text-danger">*</span></label>
+                        <label class="form-label">Mã số thuế / Tax Code <span class="required-star">*</span></label>
                         <input type="text" id="mst_ca_nhan" class="form-control" required>
                     </div>
                     <div class="col-md-4">
@@ -235,48 +265,41 @@
             </div>
 
             <div class="form-section">
-                <div class="section-title"><i class="bi bi-people"></i> 5. Gia đình / Family (Children)</div>
-                <p class="text-muted small">Thông tin con cái (Họ tên - Năm sinh) / Children info (Name - YOB)</p>
+                <div class="section-title"><i class="bi bi-people-fill"></i> 5. Gia đình / Family (Children)</div>
                 <div class="row g-3">
-                    <div class="col-12"><input type="text" id="con_1" class="form-control" placeholder="Con thứ 1 / Child 1"></div>
-                    <div class="col-12"><input type="text" id="con_2" class="form-control" placeholder="Con thứ 2 / Child 2"></div>
-                    <div class="col-12"><input type="text" id="con_3" class="form-control" placeholder="Con thứ 3 / Child 3"></div>
+                    <div class="col-12"><input type="text" id="con_1" class="form-control mb-2" placeholder="Con thứ 1 (Họ tên - Năm sinh)"></div>
+                    <div class="col-12"><input type="text" id="con_2" class="form-control mb-2" placeholder="Con thứ 2 (Họ tên - Năm sinh)"></div>
+                    <div class="col-12"><input type="text" id="con_3" class="form-control mb-2" placeholder="Con thứ 3 (Họ tên - Năm sinh)"></div>
                 </div>
 
-                <div class="mt-4">
-                    <label class="form-label fw-bold">Người phụ thuộc (Giảm trừ gia cảnh) / Dependents</label>
-                    <div class="p-3 bg-light rounded border mb-2">
-                        <label class="small fw-bold">Người 1:</label>
-                        <div class="row g-2">
-                            <div class="col-md-4"><input type="text" id="npt_1_ten" class="form-control form-control-sm" placeholder="Họ tên / Name"></div>
-                            <div class="col-md-4"><input type="text" id="npt_1_mst" class="form-control form-control-sm" placeholder="Mã số thuế / Tax Code"></div>
-                            <div class="col-md-4"><input type="text" id="npt_1_qh" class="form-control form-control-sm" placeholder="Quan hệ / Relation"></div>
-                        </div>
+                <div class="mt-4 p-3 rounded-4 border bg-white shadow-sm">
+                    <label class="form-label fw-bold mb-3">Người phụ thuộc (Giảm trừ gia cảnh) / Dependents</label>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4"><input type="text" id="npt_1_ten" class="form-control form-control-sm" placeholder="Họ tên Người 1"></div>
+                        <div class="col-md-4"><input type="text" id="npt_1_mst" class="form-control form-control-sm" placeholder="MST Người 1"></div>
+                        <div class="col-md-4"><input type="text" id="npt_1_qh" class="form-control form-control-sm" placeholder="Quan hệ"></div>
                     </div>
-                    <div class="p-3 bg-light rounded border">
-                        <label class="small fw-bold">Người 2:</label>
-                        <div class="row g-2">
-                            <div class="col-md-4"><input type="text" id="npt_2_ten" class="form-control form-control-sm" placeholder="Họ tên / Name"></div>
-                            <div class="col-md-4"><input type="text" id="npt_2_mst" class="form-control form-control-sm" placeholder="Mã số thuế / Tax Code"></div>
-                            <div class="col-md-4"><input type="text" id="npt_2_qh" class="form-control form-control-sm" placeholder="Quan hệ / Relation"></div>
-                        </div>
+                    <div class="row g-3">
+                        <div class="col-md-4"><input type="text" id="npt_2_ten" class="form-control form-control-sm" placeholder="Họ tên Người 2"></div>
+                        <div class="col-md-4"><input type="text" id="npt_2_mst" class="form-control form-control-sm" placeholder="MST Người 2"></div>
+                        <div class="col-md-4"><input type="text" id="npt_2_qh" class="form-control form-control-sm" placeholder="Quan hệ"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="form-section bg-light">
-                <div class="section-title"><i class="bi bi-telephone-plus"></i> 6. Liên hệ khẩn cấp / Emergency Contact</div>
+            <div class="form-section bg-glass-light">
+                <div class="section-title"><i class="bi bi-exclamation-triangle-fill"></i> 6. Liên hệ khẩn cấp / Emergency</div>
                 <div class="col-12">
-                    <label class="form-label">Họ tên - Quan hệ - SĐT <span class="text-danger">*</span></label>
+                    <label class="form-label">Họ tên - Quan hệ - Số điện thoại <span class="required-star">*</span></label>
                     <input type="text" id="lien_he_khan_cap" class="form-control" required placeholder="VD: Nguyen Van B - Bố - 0987...">
                 </div>
             </div>
 
             <div class="form-section">
-                <div class="section-title"><i class="bi bi-briefcase"></i> 7. Thông tin công việc / Job Info</div>
-                <div class="row g-3">
+                <div class="section-title"><i class="bi bi-briefcase-fill"></i> 7. Thông tin công việc / Job Info</div>
+                <div class="row g-4">
                     <div class="col-md-6">
-                        <label class="form-label">Loại hợp đồng / Contract Type <span class="text-danger">*</span></label>
+                        <label class="form-label">Loại hợp đồng / Contract Type <span class="required-star">*</span></label>
                         <select id="loai_hop_dong" class="form-select" required>
                             <option value="">-- Chọn / Select --</option>
                             <option value="Hợp đồng dịch vụ">Hợp đồng dịch vụ / Service</option>
@@ -287,7 +310,7 @@
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Phòng ban / Department <span class="text-danger">*</span></label>
+                        <label class="form-label">Phòng ban / Department <span class="required-star">*</span></label>
                         <select id="phong_ban" class="form-select" required>
                             <option value="">-- Chọn / Select --</option>
                             <option value="Đào tạo">Phòng Đào tạo / Training Dept</option>
@@ -301,45 +324,38 @@
                 </div>
             </div>
 
-            <div class="form-section bg-light">
-                <div class="section-title"><i class="bi bi-cloud-upload"></i> 8. Tải lên hồ sơ / Upload Documents</div>
-                <div class="alert alert-info small">
-                    <i class="bi bi-info-circle"></i> Vui lòng tải lên ảnh chụp <strong>CCCD (2 mặt)</strong> và các bằng cấp liên quan.<br>
-                    Please upload photos of <strong>ID Card (both sides)</strong> and degrees.
+            <div class="form-section bg-glass-light">
+                <div class="section-title"><i class="bi bi-cloud-arrow-up-fill"></i> 8. Tải lên hồ sơ / Upload Documents</div>
+                <div class="alert alert-warning border-0 shadow-sm rounded-4 small">
+                    <i class="bi bi-info-circle-fill me-2"></i>Tải lên ảnh <strong>CCCD (2 mặt)</strong> và các bằng cấp liên quan (Tối đa 5 file).
                 </div>
                 
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Ảnh CCCD 2 mặt và hồ sơ (Tối đa 5 ảnh / Max 5) <span class="text-danger">*</span></label>
                     <input type="file" id="fileInput" class="form-control" multiple accept="image/*,application/pdf" required>
-                    <div id="fileList" class="mt-2 text-muted small fst-italic"></div>
+                    <div id="fileList" class="mt-3 d-flex flex-wrap gap-2"></div>
                 </div>
             </div>
 
-            <div class="p-4">
+            <div class="p-5">
                 <button type="submit" id="btnSubmit" class="btn-submit">
-                    <i class="bi bi-send-fill"></i> GỬI HỒ SƠ / SUBMIT
+                    <i class="bi bi-send-check-fill me-2"></i> GỬI HỒ SƠ / SUBMIT FORM
                 </button>
             </div>
 
         </form>
         
-        <div class="text-center pb-4 admin-link">
-            <a href="./admin.html"><i class="bi bi-shield-lock"></i> Admin Portal</a>
+        <div class="text-center pb-5 admin-link">
+            <a href="./admin.html"><i class="bi bi-lock-fill me-1"></i> Admin Portal</a>
         </div>
     </div>
 
     <script>
-        // ============================================================
-        // HÃY DÁN LINK WEB APP CỦA BẠN VÀO DÒNG DƯỚI ĐÂY
-        // ============================================================
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNkAmErQPLv7GOGtKInpgOucDy8qYytZ7L-TfNskakmcvYcsS4qXE74I-saOD2yC4itA/exec"; 
-        // ============================================================
 
         const fileInput = document.getElementById('fileInput');
         const fileListDisplay = document.getElementById('fileList');
         let selectedFiles = [];
 
-        // Xử lý hiển thị tên file khi chọn
         fileInput.addEventListener('change', () => {
             fileListDisplay.innerHTML = '';
             selectedFiles = Array.from(fileInput.files);
@@ -352,21 +368,40 @@
             }
 
             selectedFiles.forEach(file => {
-                fileListDisplay.innerHTML += `<div><i class="bi bi-check-circle-fill text-success"></i> ${file.name}</div>`;
+                const badge = document.createElement('span');
+                badge.className = 'badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 p-2 rounded-3';
+                badge.innerHTML = `<i class="bi bi-file-earmark-check me-1"></i> ${file.name}`;
+                fileListDisplay.appendChild(badge);
             });
         });
 
         function submitForm(e) {
             e.preventDefault();
+
+            // 1. Kiểm tra định dạng Email & Các trường bắt buộc bổ sung
+            const emailValue = document.getElementById('email').value.trim();
+            const bankName = document.getElementById('chi_nhanh_ngan_hang').value.trim();
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(emailValue)) {
+                alert("Định dạng Email không hợp lệ! Vui lòng kiểm tra lại. \nInvalid Email format!");
+                document.getElementById('email').focus();
+                return;
+            }
+
+            if (bankName === "") {
+                alert("Vui lòng cung cấp tên Ngân hàng! \nBank Name is required!");
+                document.getElementById('chi_nhanh_ngan_hang').focus();
+                return;
+            }
             
-            if(!confirm("Xác nhận gửi thông tin? / Confirm submit?")) return;
+            if(!confirm("Xác nhận thông tin khai báo là chính xác và gửi đi?")) return;
 
             const btn = document.getElementById('btnSubmit');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Đang xử lý / Processing...';
+            btn.innerHTML = '<span class="spinner-grow spinner-grow-sm me-2"></span> Đang gửi hồ sơ...';
             btn.disabled = true;
 
-            // 1. Thu thập dữ liệu Form
             const formData = {
                 ho_ten: document.getElementById('ho_ten').value,
                 gioi_tinh: document.getElementById('gioi_tinh').value,
@@ -374,60 +409,50 @@
                 ngay_sinh: document.getElementById('ngay_sinh').value,
                 noi_sinh: document.getElementById('noi_sinh').value,
                 so_dien_thoai: document.getElementById('so_dien_thoai').value,
-                email: document.getElementById('email').value,
+                email: emailValue,
                 hon_nhan: document.getElementById('hon_nhan').value,
                 dia_chi_thuong_tru: document.getElementById('dia_chi_thuong_tru').value,
                 noi_o_hien_tai: document.getElementById('noi_o_hien_tai').value,
-                
                 so_cccd: document.getElementById('so_cccd').value,
                 ngay_cap_cccd: document.getElementById('ngay_cap_cccd').value,
                 noi_cap_cccd: document.getElementById('noi_cap_cccd').value,
-                
                 trinh_do: document.getElementById('trinh_do').value,
                 chuyen_nganh: document.getElementById('chuyen_nganh').value,
                 truong_dao_tao: document.getElementById('truong_dao_tao').value,
                 bang_cap_khac: document.getElementById('bang_cap_khac').value,
-                
                 ten_tk_ngan_hang: document.getElementById('ten_tk_ngan_hang').value,
                 so_tk_ngan_hang: document.getElementById('so_tk_ngan_hang').value,
-                chi_nhanh_ngan_hang: document.getElementById('chi_nhanh_ngan_hang').value,
+                chi_nhanh_ngan_hang: bankName,
                 mst_ca_nhan: document.getElementById('mst_ca_nhan').value,
                 ngay_cap_mst: document.getElementById('ngay_cap_mst').value,
                 noi_cap_mst: document.getElementById('noi_cap_mst').value,
                 so_bhxh: document.getElementById('so_bhxh').value,
-                
                 con_1: document.getElementById('con_1').value,
                 con_2: document.getElementById('con_2').value,
                 con_3: document.getElementById('con_3').value,
-                
                 npt_1_ten: document.getElementById('npt_1_ten').value,
                 npt_1_mst: document.getElementById('npt_1_mst').value,
                 npt_1_qh: document.getElementById('npt_1_qh').value,
                 npt_2_ten: document.getElementById('npt_2_ten').value,
                 npt_2_mst: document.getElementById('npt_2_mst').value,
                 npt_2_qh: document.getElementById('npt_2_qh').value,
-                
                 lien_he_khan_cap: document.getElementById('lien_he_khan_cap').value,
                 loai_hop_dong: document.getElementById('loai_hop_dong').value,
                 phong_ban: document.getElementById('phong_ban').value
             };
 
-            // 2. Gửi thông tin (SAVE_INFO)
             fetch(SCRIPT_URL, {
                 method: "POST",
-                redirect: "follow",
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({ action: "SAVE_INFO", payload: formData })
             })
             .then(res => res.json())
             .then(response => {
                 if (response.status === 'SUCCESS') {
-                    const folderId = response.message.folderId; // Lấy ID folder vừa tạo
-                    
-                    // 3. Nếu có file thì Upload tiếp
+                    const folderId = response.message.folderId; 
                     if (selectedFiles.length > 0) {
                         uploadFilesSequentially(selectedFiles, folderId, () => {
-                            alert("✅ GỬI HỒ SƠ THÀNH CÔNG! \nSuccessfully Submitted!");
+                            alert("✅ GỬI HỒ SƠ THÀNH CÔNG!");
                             document.getElementById('hrForm').reset();
                             fileListDisplay.innerHTML = '';
                             btn.disabled = false;
@@ -444,29 +469,24 @@
                 }
             })
             .catch(error => {
-                alert("LỖI / ERROR: " + error);
+                alert("LỖI KẾT NỐI / CONNECTION ERROR: " + error);
                 btn.disabled = false;
                 btn.innerHTML = originalText;
             });
         }
 
-        // Hàm upload file tuần tự
         async function uploadFilesSequentially(files, folderId, onComplete) {
-            let uploadedCount = 0;
             const btn = document.getElementById('btnSubmit');
-            
             for (let i = 0; i < files.length; i++) {
-                btn.innerHTML = `Uploading file ${i+1}/${files.length}...`;
+                btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Đang tải file ${i+1}/${files.length}...`;
                 const file = files[i];
                 const reader = new FileReader();
                 
                 await new Promise((resolve, reject) => {
                     reader.onload = function(e) {
-                        const base64Data = e.target.result; // Data URL
-                        
+                        const base64Data = e.target.result;
                         fetch(SCRIPT_URL, {
                             method: "POST",
-                            redirect: "follow",
                             headers: { "Content-Type": "text/plain;charset=utf-8" },
                             body: JSON.stringify({
                                 action: "UPLOAD_FILE",
